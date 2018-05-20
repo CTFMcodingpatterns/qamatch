@@ -34,8 +34,8 @@ export class Questions extends React.Component<QuestionsProps, QuestionsState> {
 
     public render() {
         let contents = this.state.loading
-            ? Questions.renderLoading()
-            : Questions.renderTable(this.state.questions);
+            ? this.renderLoading()
+            : this.renderTable(this.state.questions);
 
         return <div>
             <h1>Questions</h1>
@@ -45,11 +45,11 @@ export class Questions extends React.Component<QuestionsProps, QuestionsState> {
         </div>;
     }
 
-    private static renderLoading() {
+    private renderLoading() {
         return <p><em>Loading Questions...</em></p>;
     }
 
-    private static renderTable(questions: Question[]) {
+    private renderTable(questions: Question[]) {
         return <table className='table'>
             <thead>
                 <tr>
@@ -70,15 +70,17 @@ export class Questions extends React.Component<QuestionsProps, QuestionsState> {
                         <td>{question.kind}</td>
                         <td>{question.id}</td>
                         <td>{question.order}</td>
-                        <td>{question.title}</td>
+                        <td>
+                            <Link to={`${this.props.routeProps.match.url}/Detail/${question.id}`}>{question.title}</Link>
+                        </td>
                         <td>{question.description}</td>
                         <td>{question.choices && question.choices.length}</td>
                         <td>{question.weight}</td>
                         <td>
-                            <Link to="/questions/detail/{question.id}">Details</Link>
+                            <Link to={this.props.routeProps.match.url + "/Edit/" + question.id}>Edit</Link>
                         </td>
                         <td>
-                            <Link to="/questions/edit/{question.id}">Edit</Link>
+                            <Link to={this.props.routeProps.match.url + "/Delete/" + question.id}>Delete</Link>
                         </td>
                     </tr>
                 )}
