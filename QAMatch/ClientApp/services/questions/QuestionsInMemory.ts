@@ -3,7 +3,6 @@ import { IQuestionRepos } from './IQuestionRepos';
 import { Children } from 'react';
 
 export class QuestionsInMemory implements IQuestionRepos {
-
     QuestionList: Question[];
 
     constructor() {
@@ -60,8 +59,17 @@ export class QuestionsInMemory implements IQuestionRepos {
     }
 
     public getQuestionsAsync(): Promise<Question[]> {
-        const statements = this.QuestionList;
-        const promise = new Promise<Question[]>((resolve, reject) => resolve(statements));
+        const questions = this.QuestionList;
+        const promise = new Promise<Question[]>((resolve, reject) => resolve(questions));
         return promise;
     }
+
+    public getQuestionByIdAsync(id: number): Promise<Question> {
+        const question: Question = this.QuestionList
+            .filter(question => question.id == id)[0];          
+        const promise = new Promise<Question>((resolve, reject) => resolve(question));
+        return promise;
+    }
+
+
 }

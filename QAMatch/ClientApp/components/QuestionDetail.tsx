@@ -21,6 +21,14 @@ export class QuestionDetail extends React.Component<DetailProps, DetailState> {
             loading: true,
             question: null
         };
+        const id: number = this.props.routeProps.match.params["id"];
+        this.fetchAndSetQuestion(id);
+    }
+
+    private fetchAndSetQuestion(id: number) {
+        this.props.repos.getQuestionByIdAsync(id)
+            .then(data => this.setState({question: data, loading: false}))
+            .catch(reason => console.log("reason: " + reason));
     }
 
     public render() {
@@ -43,16 +51,43 @@ export class QuestionDetail extends React.Component<DetailProps, DetailState> {
 
     private renderDetail(question: Question) {
         //TODO
-        return <div>
-            <div className="form-group-row">
-                <input type="hidden" name="id" value={question.id} />
-            </div>
-            <div className="form-group-row">
-                <label className=" control-label col-md-12" htmlFor="Title">Title</label>
-                <div className="col-md-4">
-                    <input className="form-control" type="text" name="title" defaultValue="question.title"></input>
-                </div>
-            </div>
-        </div>;
+        return <table className="table">
+            <thead>
+                <tr>
+                    <th style={{ width: '10%' }}></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Kind: </td>
+                    <td>{question.kind}</td>
+                </tr>
+                <tr>
+                    <td>Id: </td>
+                    <td>{question.id}</td>
+                </tr>
+                <tr>
+                    <td>Order: </td>
+                    <td>{question.order}</td>
+                </tr>
+                <tr>
+                    <td>Title: </td>
+                    <td>{question.title}</td>
+                </tr>
+                <tr>
+                    <td>Description: </td>
+                    <td>{question.description}</td>
+                </tr>
+                <tr>
+                    <td>Weight: </td>
+                    <td>{question.weight}</td>
+                </tr>
+                <tr>
+                    <td>Choices: </td>
+                    <td>{question.choices.map(choice => <p>{choice}</p>)}</td>
+                </tr>
+            </tbody>
+        </table>;
     }
 }
