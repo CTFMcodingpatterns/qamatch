@@ -1,18 +1,19 @@
 ﻿import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
+import { Link, NavLink } from 'react-router-dom';
 import { Question } from '../services/questions/Question';
 import { IQuestionRepos } from '../services/questions/IQuestionRepos';
 import 'isomorphic-fetch';
 
 
-interface QuestionsState {
-    questions: Question[];
-    loading: boolean;
-}
-
 interface QuestionsProps {
     routeProps: RouteComponentProps<{}>;
     repos: IQuestionRepos;
+}
+
+interface QuestionsState {
+    questions: Question[];
+    loading: boolean;
 }
 
 export class Questions extends React.Component<QuestionsProps, QuestionsState> {
@@ -59,6 +60,8 @@ export class Questions extends React.Component<QuestionsProps, QuestionsState> {
                     <th>Description</th>
                     <th>Choices</th>
                     <th>Weight</th>
+                    <th></th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -71,6 +74,12 @@ export class Questions extends React.Component<QuestionsProps, QuestionsState> {
                         <td>{question.description}</td>
                         <td>{question.choices && question.choices.length}</td>
                         <td>{question.weight}</td>
+                        <td>
+                            <Link to="/questions/detail/{question.id}">Details</Link>
+                        </td>
+                        <td>
+                            <Link to="/questions/edit/{question.id}">Edit</Link>
+                        </td>
                     </tr>
                 )}
             </tbody>
