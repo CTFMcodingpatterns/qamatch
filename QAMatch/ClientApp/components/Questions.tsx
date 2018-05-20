@@ -2,55 +2,53 @@
 import { RouteComponentProps } from 'react-router';
 import { Question } from '../services/questions/Question';
 import { IQuestionRepos } from '../services/questions/IQuestionRepos';
-import { QuestionInMemory } from '../services/questions/QuestionInMemory';
 import 'isomorphic-fetch';
 
 
-interface StatementsState {
-    //repos: IStatementRepos;
-    statements: Question[];
+interface QuestionsState {
+    questions: Question[];
     loading: boolean;
 }
 
-interface StatementProps {
+interface QuestionsProps {
     routeProps: RouteComponentProps<{}>;
     repos: IQuestionRepos;
 }
 
-export class Statements extends React.Component<StatementProps, StatementsState> {
-    constructor(props: StatementProps) {
+export class Questions extends React.Component<QuestionsProps, QuestionsState> {
+    constructor(props: QuestionsProps) {
         super(props);
         this.state = {
-            statements: [],
+            questions: [],
             loading: true
         };
-        this.fetchAndSetStatements();
+        this.fetchAndSetQuestions();
     }
 
-    private fetchAndSetStatements() {
+    private fetchAndSetQuestions() {
         this.props.repos.getQuestionsAsync()
-            .then(data => this.setState({ statements: data, loading: false }))
+            .then(data => this.setState({ questions: data, loading: false }))
             .catch(reason => console.log("reason: " + reason));
     }
 
     public render() {
         let contents = this.state.loading
-            ? Statements.renderLoading()
-            : Statements.renderTable(this.state.statements);
+            ? Questions.renderLoading()
+            : Questions.renderTable(this.state.questions);
 
         return <div>
-            <h1>Statements</h1>
+            <h1>Questions</h1>
             <p>This component demonstrates fetching data from the server.</p>
             {contents}
-            <button onClick={() => { this.fetchAndSetStatements() }}>Fetch</button>
+            <button onClick={() => { this.fetchAndSetQuestions() }}>Fetch</button>
         </div>;
     }
 
     private static renderLoading() {
-        return <p><em>Loading Statements...</em></p>;
+        return <p><em>Loading Questions...</em></p>;
     }
 
-    private static renderTable(statements: Question[]) {
+    private static renderTable(questions: Question[]) {
         return <table className='table'>
             <thead>
                 <tr>
@@ -64,15 +62,15 @@ export class Statements extends React.Component<StatementProps, StatementsState>
                 </tr>
             </thead>
             <tbody>
-                {statements.map(stmt =>
-                    <tr key={stmt.order}>
-                        <td>{stmt.kind}</td>
-                        <td>{stmt.id}</td>
-                        <td>{stmt.order}</td>
-                        <td>{stmt.title}</td>
-                        <td>{stmt.description}</td>
-                        <td>{stmt.choices && stmt.choices.length}</td>
-                        <td>{stmt.weight}</td>
+                {questions.map(question =>
+                    <tr key={question.order}>
+                        <td>{question.kind}</td>
+                        <td>{question.id}</td>
+                        <td>{question.order}</td>
+                        <td>{question.title}</td>
+                        <td>{question.description}</td>
+                        <td>{question.choices && question.choices.length}</td>
+                        <td>{question.weight}</td>
                     </tr>
                 )}
             </tbody>

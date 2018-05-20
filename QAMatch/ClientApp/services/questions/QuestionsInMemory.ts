@@ -2,12 +2,12 @@
 import { IQuestionRepos } from './IQuestionRepos';
 import { Children } from 'react';
 
-export class QuestionInMemory implements IQuestionRepos {
+export class QuestionsInMemory implements IQuestionRepos {
 
     QuestionList: Question[];
 
     constructor() {
-        this.QuestionList = QuestionInMemory.createQuestions();
+        this.QuestionList = QuestionsInMemory.createQuestions();
     }
 
     public static createQuestions(): Question[] {
