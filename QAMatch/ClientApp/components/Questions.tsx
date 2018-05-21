@@ -50,6 +50,7 @@ export class Questions extends React.Component<QuestionsProps, QuestionsState> {
     }
 
     private renderTable(questions: Question[]) {
+        const myUrl = this.props.routeProps.match.url;
         return <table className='table'>
             <thead>
                 <tr>
@@ -71,16 +72,16 @@ export class Questions extends React.Component<QuestionsProps, QuestionsState> {
                         <td>{question.id}</td>
                         <td>{question.order}</td>
                         <td>
-                            <Link to={`${this.props.routeProps.match.url}/Detail/${question.id}`}>{question.title}</Link>
+                            <Link to={`${myUrl}/Detail/${question.id}`}>{question.title}</Link>
                         </td>
                         <td>{question.description}</td>
                         <td>{question.choices && question.choices.length}</td>
                         <td>{question.weight}</td>
                         <td>
-                            <Link to={this.props.routeProps.match.url + "/Edit/" + question.id}>Edit</Link>
+                            <Link to={myUrl + "/Edit/" + question.id}>Edit</Link>
                         </td>
                         <td>
-                            <Link to={this.props.routeProps.match.url + "/Delete/" + question.id}>Delete</Link>
+                            <Link to={myUrl + "/Delete/" + question.id}>Delete</Link>
                         </td>
                     </tr>
                 )}
