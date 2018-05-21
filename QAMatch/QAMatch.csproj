@@ -33,9 +33,9 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\components\App.tsx" />
-    <TypeScriptCompile Include="ClientApp\components\QuestionDetail.tsx" />
-    <TypeScriptCompile Include="ClientApp\components\QuestionForm.tsx" />
-    <TypeScriptCompile Include="ClientApp\components\Questions.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\questions\QuestionDetail.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\questions\QuestionForm.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\questions\Questions.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Surveys.tsx" />
     <TypeScriptCompile Include="ClientApp\services\questions\Question.ts" />
   </ItemGroup>

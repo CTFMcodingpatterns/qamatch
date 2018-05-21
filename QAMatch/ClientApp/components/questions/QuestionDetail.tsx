@@ -1,7 +1,7 @@
 ﻿import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
-import { Question } from '../services/questions/Question';
-import { IQuestionRepos } from '../services/questions/IQuestionRepos';
+import { Question } from '../../services/questions/Question';
+import { IQuestionRepos } from '../../services/questions/IQuestionRepos';
 import { PropTypes } from 'react';
 
 interface DetailProps {

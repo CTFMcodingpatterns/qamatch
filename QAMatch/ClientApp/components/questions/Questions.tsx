@@ -1,8 +1,8 @@
 ﻿import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { Link, NavLink } from 'react-router-dom';
-import { Question } from '../services/questions/Question';
-import { IQuestionRepos } from '../services/questions/IQuestionRepos';
+import { Question } from '../../services/questions/Question';
+import { IQuestionRepos } from '../../services/questions/IQuestionRepos';
 import 'isomorphic-fetch';
 
 
