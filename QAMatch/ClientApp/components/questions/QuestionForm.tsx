@@ -21,7 +21,18 @@ export class QuestionForm extends React.Component<FormProps, FormState> {
             loading: true,
             question: null
         };
+        const id: number = this.props.routeProps.match.params["id"];
+        this.fetchAndSetQuestion(id);
         this.handleSave = this.handleSave.bind(this);
+    }
+
+    private fetchAndSetQuestion(id: number) {
+        this.props.repos.getQuestionByIdAsync(id)
+            .then(data => this.setState({
+                loading: false,
+                question: data
+            }))
+            .catch(reason => console.log("reason: " + reason));
     }
 
     private handleSave(event) {
@@ -50,16 +61,56 @@ export class QuestionForm extends React.Component<FormProps, FormState> {
 
     private renderForm(question: Question) {
         //TODO
+        const orderStr: string = question.order.toString();
+        const weightStr: string = question.weight.toString();
+
         return <form onSubmit={this.handleSave}>
             <div className="form-group-row">
                 <input type="hidden" name="id" value={question.id} />
             </div>
             <div className="form-group-row">
-                <label className=" control-label col-md-12" htmlFor="Title">Title</label>
-                <div className="col-md-4">
-                    <input className="form-control" type="text" name="title" defaultValue="question.title"></input>
+                <label className="control-label col-sm-3" htmlFor="Order">Order</label>
+                <div className="col-sm-9">
+                    <input className="form-control" type="number" name="order" defaultValue={orderStr}></input>
                 </div>
             </div>
+            <div className="form-group-row">
+                <label className="control-label col-sm-3" htmlFor="kind">kind</label>
+                <div className="col-sm-9">
+                    <input className="form-control" type="text" name="kind" defaultValue={question.kind}></input>
+                </div>
+            </div>
+            <div className="form-group-row">
+                <label className="control-label col-sm-3" htmlFor="Title">Title</label>
+                <div className="col-sm-9">
+                    <input className="form-control" type="text" name="title" defaultValue={question.title}></input>
+                </div>
+            </div>
+            <div className="form-group-row">
+                <label className="control-label col-sm-3" htmlFor="kind">kind</label>
+                <div className="col-sm-9">
+                    <input className="form-control" type="text" name="kind" defaultValue={question.kind}></input>
+                </div>
+            </div>
+            <div className="form-group-row">
+                <label className="control-label col-sm-3" htmlFor="description">description</label>
+                <div className="col-sm-9">
+                    <input className="form-control" type="text" name="description" defaultValue={question.description}></input>
+                </div>
+            </div>
+            <div className="form-group-row">
+                <label className="control-label col-sm-3" htmlFor="weight">weight</label>
+                <div className="col-sm-9">
+                    <input className="form-control" type="text" name="weight" defaultValue={weightStr}></input>
+                </div>
+            </div>
+            <div className="form-group-row">
+                <label className="control-label col-sm-3" htmlFor="choices">choices</label>
+                <div className="col-sm-9">
+                    <input className="form-control" type="text" name="choices" defaultValue={question.choices}></input>
+                </div>
+            </div>
+
         </form>;
     }
 }

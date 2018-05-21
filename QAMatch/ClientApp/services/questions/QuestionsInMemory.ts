@@ -66,8 +66,11 @@ export class QuestionsInMemory implements IQuestionRepos {
 
     public getQuestionByIdAsync(id: number): Promise<Question> {
         const question: Question = this.QuestionList
-            .filter(question => question.id == id)[0];          
-        const promise = new Promise<Question>((resolve, reject) => resolve(question));
+            .filter(question => question.id == id)[0];  
+        const promise = new Promise<Question>((resolve, reject) => {
+            if (question != null) resolve(question)
+            else reject("no data");
+        });
         return promise;
     }
 
