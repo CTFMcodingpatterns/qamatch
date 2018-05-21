@@ -1,4 +1,4 @@
-﻿export interface Question {
+﻿export class Question {
     kind: string;
     id: number;
     order: number;

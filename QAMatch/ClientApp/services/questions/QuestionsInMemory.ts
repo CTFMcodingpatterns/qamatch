@@ -58,6 +58,11 @@ export class QuestionsInMemory implements IQuestionRepos {
         return choices.slice(0, num);
     }
 
+    private FindQuestionById(id: number) {
+        return this.QuestionList
+            .filter(question => question.id == id)[0];
+    }
+
     public getQuestionsAsync(): Promise<Question[]> {
         const questions = this.QuestionList;
         const promise = new Promise<Question[]>((resolve, reject) => resolve(questions));
@@ -65,8 +70,7 @@ export class QuestionsInMemory implements IQuestionRepos {
     }
 
     public getQuestionByIdAsync(id: number): Promise<Question> {
-        const question: Question = this.QuestionList
-            .filter(question => question.id == id)[0];  
+        const question: Question = this.FindQuestionById(id);  
         const promise = new Promise<Question>((resolve, reject) => {
             if (question != null) resolve(question)
             else reject("no data");
@@ -74,5 +78,17 @@ export class QuestionsInMemory implements IQuestionRepos {
         return promise;
     }
 
-
+    updateQuestionAsync(question: Question): Promise<boolean> {
+        let done: boolean = false;
+        if (this.FindQuestionById(question.id)) {
+            this.QuestionList = this.QuestionList
+                .map(qil => (qil.id == question.id) ? question : qil);
+            done = true;
+        }
+        const promise = new Promise<boolean>((resolve, reject) => {
+            if (done) resolve(done)
+            else reject("not ok");
+        });
+        return promise;
+    }
 }

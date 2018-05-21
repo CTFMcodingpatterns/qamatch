@@ -1,5 +1,5 @@
 ﻿import * as React from 'react';
-import { RouteComponentProps } from 'react-router';
+import { RouteComponentProps, Redirect } from 'react-router';
 import { Question } from '../../services/questions/Question';
 import { IQuestionRepos} from '../../services/questions/IQuestionRepos';
 import { PropTypes } from 'react';
@@ -22,8 +22,13 @@ export class QuestionForm extends React.Component<FormProps, FormState> {
             question: null
         };
         const id: number = this.props.routeProps.match.params["id"];
-        this.fetchAndSetQuestion(id);
+        if (id != null) {
+            this.fetchAndSetQuestion(id);
+        } else {
+            this.state = { loading: false, question: new Question() };
+        }
         this.handleSave = this.handleSave.bind(this);
+        this.handleCancel = this.handleCancel.bind(this);
     }
 
     private fetchAndSetQuestion(id: number) {
@@ -36,9 +41,34 @@ export class QuestionForm extends React.Component<FormProps, FormState> {
     }
 
     private handleSave(event) {
+        //TODO
         event.preventDefault();
         const data = new FormData(event.target);
+        const question: Question = this.ToQuestion(data);
+        this.props.repos.updateQuestionAsync(question)
+            .then(result => this.props.routeProps.history.push("/questions"))
+            .catch(reason => console.log("reason: " + reason));
+    }
+
+    private handleCancel(event) {
+        event.preventDefault();
+        this.props.routeProps.history.push("/questions");
+    }
+
+    private ToQuestion(data: FormData): Question {
         //TODO
+        const idNum: number = parseInt(data["id"]);
+        const orderNum: number = parseInt(data["order"]);
+        const question: Question = {
+            id: idNum,
+            order: orderNum,
+            kind: "multiplechoice",
+            title: data["title"],
+            description: data["description"],
+            weight: 0,
+            choices: null
+        };
+        return question;
     }
 
     public render() {
@@ -61,15 +91,15 @@ export class QuestionForm extends React.Component<FormProps, FormState> {
 
     private renderForm(question: Question) {
         //TODO
-        const orderStr: string = question.order.toString();
-        const weightStr: string = question.weight.toString();
+        const orderStr: string = question.order && question.order.toString();
+        const weightStr: string = question.weight && question.weight.toString();
 
         return <form onSubmit={this.handleSave}>
             <div className="form-group-row">
                 <input type="hidden" name="id" value={question.id} />
             </div>
             <div className="form-group-row">
-                <label className="control-label col-sm-3" htmlFor="Order">Order</label>
+                <label className="control-label col-sm-3" htmlFor="order">Order</label>
                 <div className="col-sm-9">
                     <input className="form-control" type="number" name="order" defaultValue={orderStr}></input>
                 </div>
@@ -81,7 +111,7 @@ export class QuestionForm extends React.Component<FormProps, FormState> {
                 </div>
             </div>
             <div className="form-group-row">
-                <label className="control-label col-sm-3" htmlFor="Title">Title</label>
+                <label className="control-label col-sm-3" htmlFor="title">Title</label>
                 <div className="col-sm-9">
                     <input className="form-control" type="text" name="title" defaultValue={question.title}></input>
                 </div>
@@ -109,6 +139,11 @@ export class QuestionForm extends React.Component<FormProps, FormState> {
                 <div className="col-sm-9">
                     <input className="form-control" type="text" name="choices" defaultValue={question.choices}></input>
                 </div>
+            </div>
+
+            <div className="form-group">
+                <button type="submit" className="btn btn-default">Save</button>
+                <button className="btn" onClick={this.handleCancel}>Cancel</button>
             </div>
 
         </form>;
