@@ -11,7 +11,8 @@ interface FormProps {
 
 interface FormState {
     loading: boolean,
-    question: Question
+    question: Question,
+    formInput: {}
 }
 
 export class QuestionForm extends React.Component<FormProps, FormState> {
@@ -19,16 +20,19 @@ export class QuestionForm extends React.Component<FormProps, FormState> {
         super(props);
         this.state = {
             loading: true,
-            question: null
+            question: null,
+            formInput: {}
         };
         const id: number = this.props.routeProps.match.params["id"];
         if (id != null) {
             this.fetchAndSetQuestion(id);
         } else {
-            this.state = { loading: false, question: new Question() };
+            this.state = {
+                loading: false, question: new Question(), formInput: {} };
         }
         this.handleSave = this.handleSave.bind(this);
         this.handleCancel = this.handleCancel.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     }
 
     private fetchAndSetQuestion(id: number) {
@@ -40,12 +44,26 @@ export class QuestionForm extends React.Component<FormProps, FormState> {
             .catch(reason => console.log("reason: " + reason));
     }
 
+    private handleChange(event) {
+        const name = event.target.name;
+        const value = event.target.value;
+        this.setState({
+            formInput: { ...this.state.formInput, [name]: value }
+        });
+        console.log(""
+            + "\nname: " + name + "| value: " + value
+            + "\nstate.formInput.title: " + this.state.formInput['title']
+            + "\nstate.formInput.order: " + this.state.formInput['order']
+        );
+    }
+
     private handleSave(event) {
         //TODO
         event.preventDefault();
-        const data = new FormData(event.target);
-        const question: Question = this.ToQuestion(data);
-        this.props.repos.updateQuestionAsync(question)
+        const formInputs = this.state.formInput;
+        const oldQuestion = this.state.question;
+        const newQuestion: Question = { ...oldQuestion, ...formInputs };
+        this.props.repos.updateQuestionAsync(newQuestion)
             .then(result => this.props.routeProps.history.push("/questions"))
             .catch(reason => console.log("reason: " + reason));
     }
@@ -53,22 +71,6 @@ export class QuestionForm extends React.Component<FormProps, FormState> {
     private handleCancel(event) {
         event.preventDefault();
         this.props.routeProps.history.push("/questions");
-    }
-
-    private ToQuestion(data: FormData): Question {
-        //TODO
-        const idNum: number = parseInt(data["id"]);
-        const orderNum: number = parseInt(data["order"]);
-        const question: Question = {
-            id: idNum,
-            order: orderNum,
-            kind: "multiplechoice",
-            title: data["title"],
-            description: data["description"],
-            weight: 0,
-            choices: null
-        };
-        return question;
     }
 
     public render() {
@@ -101,43 +103,43 @@ export class QuestionForm extends React.Component<FormProps, FormState> {
             <div className="form-group-row">
                 <label className="control-label col-sm-3" htmlFor="order">Order</label>
                 <div className="col-sm-9">
-                    <input className="form-control" type="number" name="order" defaultValue={orderStr}></input>
+                    <input className="form-control" type="number" name="order" defaultValue={orderStr} onChange={this.handleChange} />
                 </div>
             </div>
             <div className="form-group-row">
                 <label className="control-label col-sm-3" htmlFor="kind">kind</label>
                 <div className="col-sm-9">
-                    <input className="form-control" type="text" name="kind" defaultValue={question.kind}></input>
+                    <input className="form-control" type="text" name="kind" defaultValue={question.kind} onChange={this.handleChange}/>
                 </div>
             </div>
             <div className="form-group-row">
                 <label className="control-label col-sm-3" htmlFor="title">Title</label>
                 <div className="col-sm-9">
-                    <input className="form-control" type="text" name="title" defaultValue={question.title}></input>
+                    <input className="form-control" type="text" name="title" defaultValue={question.title} onChange={this.handleChange} />
                 </div>
             </div>
             <div className="form-group-row">
                 <label className="control-label col-sm-3" htmlFor="kind">kind</label>
                 <div className="col-sm-9">
-                    <input className="form-control" type="text" name="kind" defaultValue={question.kind}></input>
+                    <input className="form-control" type="text" name="kind" defaultValue={question.kind} onChange={this.handleChange} />
                 </div>
             </div>
             <div className="form-group-row">
                 <label className="control-label col-sm-3" htmlFor="description">description</label>
                 <div className="col-sm-9">
-                    <input className="form-control" type="text" name="description" defaultValue={question.description}></input>
+                    <input className="form-control" type="text" name="description" defaultValue={question.description} onChange={this.handleChange}/>
                 </div>
             </div>
             <div className="form-group-row">
                 <label className="control-label col-sm-3" htmlFor="weight">weight</label>
                 <div className="col-sm-9">
-                    <input className="form-control" type="text" name="weight" defaultValue={weightStr}></input>
+                    <input className="form-control" type="text" name="weight" defaultValue={weightStr} onChange={this.handleChange} />
                 </div>
             </div>
             <div className="form-group-row">
                 <label className="control-label col-sm-3" htmlFor="choices">choices</label>
                 <div className="col-sm-9">
-                    <input className="form-control" type="text" name="choices" defaultValue={question.choices}></input>
+                    <input className="form-control" type="text" name="choices" defaultValue={question.choices} onChange={this.handleChange} />
                 </div>
             </div>
 
