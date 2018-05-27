@@ -89,7 +89,7 @@ export class QuestionsInMemory implements IQuestionRepos {
         if (!this.findQuestionById(question.id)) {
             const id = this.newId();
             const questionNew = { ...question, id: id };
-            this.QuestionList = this.QuestionList.concat(question);
+            this.QuestionList = this.QuestionList.concat(questionNew);
             done = true;
         }
         const promise = new Promise<boolean>((resolve, reject) => {
