@@ -73,6 +73,7 @@ export class Questions extends React.Component<QuestionsProps, QuestionsState> {
     private renderTable(questions: Question[]) {
         const myUrl = this.props.routeProps.match.url;
         const sortedQuestions = questions
+            .slice()
             .sort((q1, q2) => q1.order - q2.order);
         return <table className='table'>
             <thead>
