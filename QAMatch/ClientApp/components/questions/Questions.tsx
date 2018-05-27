@@ -24,6 +24,9 @@ export class Questions extends React.Component<QuestionsProps, QuestionsState> {
             loading: true
         };
         this.fetchAndSetQuestions();
+        this.handleCreate = this.handleCreate.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
+        this.handleRead = this.handleRead.bind(this);
     }
 
     private fetchAndSetQuestions() {
@@ -32,16 +35,34 @@ export class Questions extends React.Component<QuestionsProps, QuestionsState> {
             .catch(reason => console.log("reason: " + reason));
     }
 
+    private handleCreate(event) {
+        //TODO
+        console.log("handleCreate called");
+    }
+
+    private handleDelete(event, id: number) {
+        //TODO
+        event.preventDefault();
+        this.props.repos.deleteQuestionAsync(id)
+            .then(ok => this.props.repos.getQuestionsAsync())
+            .then(data => this.setState({ questions: data, loading: false }))
+            .catch(reason => console.log("reason: " + reason));
+        console.log("handleDelete called");
+    }
+
+    private handleRead(event) {
+        this.fetchAndSetQuestions();
+    }
+
     public render() {
-        let contents = this.state.loading
+        let table = this.state.loading
             ? this.renderLoading()
             : this.renderTable(this.state.questions);
-
         return <div>
             <h1>Questions</h1>
-            <p>This component demonstrates fetching data from the server.</p>
-            {contents}
-            <button onClick={() => { this.fetchAndSetQuestions() }}>Fetch</button>
+            {table}
+            <button onClick={this.handleCreate}>Create</button>
+            <button onClick={() => { this.handleRead }}>Fetch</button>
         </div>;
     }
 
@@ -51,6 +72,8 @@ export class Questions extends React.Component<QuestionsProps, QuestionsState> {
 
     private renderTable(questions: Question[]) {
         const myUrl = this.props.routeProps.match.url;
+        const sortedQuestions = questions
+            .sort((q1, q2) => q1.order - q2.order);
         return <table className='table'>
             <thead>
                 <tr>
@@ -66,7 +89,7 @@ export class Questions extends React.Component<QuestionsProps, QuestionsState> {
                 </tr>
             </thead>
             <tbody>
-                {questions.map(question =>
+                {sortedQuestions.map(question =>
                     <tr key={question.order}>
                         <td>{question.kind}</td>
                         <td>{question.id}</td>
@@ -81,7 +104,7 @@ export class Questions extends React.Component<QuestionsProps, QuestionsState> {
                             <Link to={myUrl + "/Edit/" + question.id}>Edit</Link>
                         </td>
                         <td>
-                            <Link to={myUrl + "/Delete/" + question.id}>Delete</Link>
+                            <a href="#" onClick={(e) => this.handleDelete(e, question.id)}>Delete</a>
                         </td>
                     </tr>
                 )}

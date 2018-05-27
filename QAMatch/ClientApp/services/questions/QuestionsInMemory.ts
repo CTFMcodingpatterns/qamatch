@@ -87,8 +87,24 @@ export class QuestionsInMemory implements IQuestionRepos {
         }
         const promise = new Promise<boolean>((resolve, reject) => {
             if (done) resolve(done)
-            else reject("not ok");
+            else reject("not done");
         });
         return promise;
     }
+
+    deleteQuestionAsync(id: number): Promise<boolean> {
+        //TODO
+        let done: boolean = false;
+        if (this.FindQuestionById(id)) {
+            this.QuestionList = this.QuestionList
+                .filter(q => (q.id != id));
+            done = true;
+        }
+        const promise = new Promise<boolean>((resolve, reject) => {
+            if (done) resolve(done)
+            else reject("not done");
+        });
+        return promise;
+    }
+
 }
