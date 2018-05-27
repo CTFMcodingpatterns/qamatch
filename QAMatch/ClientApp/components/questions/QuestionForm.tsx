@@ -98,7 +98,10 @@ export class QuestionForm extends React.Component<FormProps, FormState> {
 
         return <form onSubmit={this.handleSave}>
             <div className="form-group-row">
-                <input type="hidden" name="id" value={question.id} />
+                <label className="control-label col-sm-3" htmlFor="id">Id</label>
+                <div className="col-sm-9">
+                    <input className="form-control" type="number" name="id" value={question.id} readOnly />
+                </div>
             </div>
             <div className="form-group-row">
                 <label className="control-label col-sm-3" htmlFor="order">Order</label>
