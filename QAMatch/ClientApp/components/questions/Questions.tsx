@@ -37,6 +37,8 @@ export class Questions extends React.Component<QuestionsProps, QuestionsState> {
 
     private handleCreate(event) {
         //TODO
+        const myUrl = this.props.routeProps.match.url;
+        this.props.routeProps.history.push(myUrl + "/create");
         console.log("handleCreate called");
     }
 

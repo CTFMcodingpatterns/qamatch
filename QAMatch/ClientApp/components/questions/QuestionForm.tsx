@@ -63,9 +63,17 @@ export class QuestionForm extends React.Component<FormProps, FormState> {
         const formInputs = this.state.formInput;
         const oldQuestion = this.state.question;
         const newQuestion: Question = { ...oldQuestion, ...formInputs };
-        this.props.repos.updateQuestionAsync(newQuestion)
-            .then(result => this.props.routeProps.history.push("/questions"))
-            .catch(reason => console.log("reason: " + reason));
+        if (oldQuestion.id != null) {
+            this.props.repos.updateQuestionAsync(newQuestion)
+                .then(result => this.props.routeProps.history.push("/questions"))
+                .catch(reason => console.log("reason: " + reason));
+
+        } else {
+            this.props.repos.createQuestionAsync(newQuestion)
+                .then(result => this.props.routeProps.history.push("/questions"))
+                .catch(reason => console.log("reason: " + reason));
+            console.log("handleSave / create called");
+        }
     }
 
     private handleCancel(event) {

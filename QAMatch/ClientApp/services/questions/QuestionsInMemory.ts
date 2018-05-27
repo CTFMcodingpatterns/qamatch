@@ -58,7 +58,12 @@ export class QuestionsInMemory implements IQuestionRepos {
         return choices.slice(0, num);
     }
 
-    private FindQuestionById(id: number) {
+    private newId(): number {
+        //TODO
+        return 100;
+    }
+
+    private findQuestionById(id: number) {
         return this.QuestionList
             .filter(question => question.id == id)[0];
     }
@@ -70,7 +75,7 @@ export class QuestionsInMemory implements IQuestionRepos {
     }
 
     public getQuestionByIdAsync(id: number): Promise<Question> {
-        const question: Question = this.FindQuestionById(id);  
+        const question: Question = this.findQuestionById(id);  
         const promise = new Promise<Question>((resolve, reject) => {
             if (question != null) resolve(question)
             else reject("no data");
@@ -78,9 +83,25 @@ export class QuestionsInMemory implements IQuestionRepos {
         return promise;
     }
 
+    createQuestionAsync(question: Question): Promise<boolean> {
+        //TODO
+        let done: boolean = false;
+        if (!this.findQuestionById(question.id)) {
+            const id = this.newId();
+            const questionNew = { ...question, id: id };
+            this.QuestionList = this.QuestionList.concat(question);
+            done = true;
+        }
+        const promise = new Promise<boolean>((resolve, reject) => {
+            if (done) resolve(done)
+            else reject("not done");
+        });
+        return promise;
+    }
+
     updateQuestionAsync(question: Question): Promise<boolean> {
         let done: boolean = false;
-        if (this.FindQuestionById(question.id)) {
+        if (this.findQuestionById(question.id)) {
             this.QuestionList = this.QuestionList
                 .map(qil => (qil.id == question.id) ? question : qil);
             done = true;
@@ -95,7 +116,7 @@ export class QuestionsInMemory implements IQuestionRepos {
     deleteQuestionAsync(id: number): Promise<boolean> {
         //TODO
         let done: boolean = false;
-        if (this.FindQuestionById(id)) {
+        if (this.findQuestionById(id)) {
             this.QuestionList = this.QuestionList
                 .filter(q => (q.id != id));
             done = true;
