@@ -85,7 +85,7 @@ export class QuestionDetail extends React.Component<DetailProps, DetailState> {
                 </tr>
                 <tr>
                     <td>Choices: </td>
-                    <td>{question.choices.map(choice =>
+                    <td>{question.choices && question.choices.map(choice =>
                         <p key={choice}>{choice}</p>)}
                     </td>
                 </tr>

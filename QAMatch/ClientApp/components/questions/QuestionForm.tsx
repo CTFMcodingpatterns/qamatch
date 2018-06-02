@@ -54,15 +54,17 @@ export class QuestionForm extends React.Component<FormProps, FormState> {
             + "\nname: " + name + "| value: " + value
             + "\nstate.formInput.title: " + this.state.formInput['title']
             + "\nstate.formInput.order: " + this.state.formInput['order']
+            + "\nstate.formInput.choices: " + this.state.formInput['choices']
         );
     }
 
     private handleSave(event) {
         //TODO
         event.preventDefault();
-        const formInputs = this.state.formInput;
+        //const formInputs = this.state.formInput;
+        const formData = this.ToFormData(this.state.formInput);
         const oldQuestion = this.state.question;
-        const newQuestion: Question = { ...oldQuestion, ...formInputs };
+        const newQuestion: Question = { ...oldQuestion, ...formData };
         if (oldQuestion.id != null) {
             this.props.repos.updateQuestionAsync(newQuestion)
                 .then(result => this.props.routeProps.history.push("/questions"))
@@ -74,6 +76,14 @@ export class QuestionForm extends React.Component<FormProps, FormState> {
                 .catch(reason => console.log("reason: " + reason));
             console.log("handleSave / create called");
         }
+    }
+
+    private ToFormData(formInput: {}): {} {
+        const choices: string[] = (formInput['choices'])
+            ? formInput['choices'].split(',')
+            : null;
+        const formData = { ...formInput, choices };
+        return formData;
     }
 
     private handleCancel(event) {
@@ -127,12 +137,6 @@ export class QuestionForm extends React.Component<FormProps, FormState> {
                 <label className="control-label col-sm-3" htmlFor="title">Title</label>
                 <div className="col-sm-9">
                     <input className="form-control" type="text" name="title" defaultValue={question.title} onChange={this.handleChange} />
-                </div>
-            </div>
-            <div className="form-group-row">
-                <label className="control-label col-sm-3" htmlFor="kind">kind</label>
-                <div className="col-sm-9">
-                    <input className="form-control" type="text" name="kind" defaultValue={question.kind} onChange={this.handleChange} />
                 </div>
             </div>
             <div className="form-group-row">
