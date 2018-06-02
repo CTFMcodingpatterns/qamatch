@@ -5,8 +5,8 @@
     <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
     <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
     <IsPackable>false</IsPackable>
-    <AssemblyVersion>1.5.0.4</AssemblyVersion>
-    <FileVersion>1.5.0.3</FileVersion>
+    <AssemblyVersion>1.6.0.0</AssemblyVersion>
+    <FileVersion>1.6.0.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -28,6 +28,7 @@
     <None Remove="ClientApp\components\QuestionForm.tsx" />
     <None Remove="ClientApp\components\Questions.tsx" />
     <None Remove="ClientApp\components\Surveys.tsx" />
+    <None Remove="ClientApp\components\surveys\Surveys.tsx" />
     <None Remove="ClientApp\services\questions\Question.ts" />
   </ItemGroup>
 
@@ -37,6 +38,7 @@
     <TypeScriptCompile Include="ClientApp\components\questions\QuestionForm.tsx" />
     <TypeScriptCompile Include="ClientApp\components\questions\Questions.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Surveys.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\surveys\Surveys.tsx" />
     <TypeScriptCompile Include="ClientApp\services\questions\Question.ts" />
   </ItemGroup>
 

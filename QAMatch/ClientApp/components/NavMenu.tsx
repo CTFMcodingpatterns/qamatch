@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Link, NavLink } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 
 export class NavMenu extends React.Component<{}, {}> {
     public render() {
@@ -23,10 +24,21 @@ export class NavMenu extends React.Component<{}, {}> {
                             </NavLink>
                         </li>
                         <li>
+                            <NavLink to={'/surveys'} activeClassName='active'>
+                                <span className='glyphicon glyphicon-th-list'></span> Surveys
+                            </NavLink>
+                        </li>
+                        <li>
                             <NavLink to={'/questions'} activeClassName='active'>
                                 <span className='glyphicon glyphicon-th-list'></span> Questions
                             </NavLink>
                         </li>
+                        <Route path='/questions' render={() =>
+                            <li>
+                                <NavLink to={'/questions'} activeClassName='active'>
+                                    <span className='glyphicon glyphicon-th-list'></span> Questions On
+                                </NavLink>
+                            </li>} />
                     </ul>
                 </div>
             </div>

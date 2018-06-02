@@ -2,12 +2,15 @@
 import { Route } from 'react-router-dom';
 import { Layout } from './Layout';
 import { Home } from './Home';
+
 import { Questions } from './questions/Questions';
 import { QuestionForm } from './questions/QuestionForm';
 import { QuestionDetail } from './questions/QuestionDetail';
 import { IQuestionRepos } from '../services/questions/IQuestionRepos';
 import { QuestionsInMemory } from '../services/questions/QuestionsInMemory';
 import { Question } from 'ClientApp/services/questions/Question';
+
+import { Surveys } from './surveys/Surveys';
 
 interface AppProps {
 }
@@ -32,10 +35,13 @@ export class App extends React.Component<AppProps, AppState>  {
 
         return <Layout>
             <Route exact path='/' component={Home} />
+
             <Route exact path='/questions' render={(routeProps) => <Questions routeProps={routeProps} repos={questionRepos} />} />
             <Route exact path='/questions/detail/:id' render={(routeProps) => <QuestionDetail routeProps={routeProps} repos={questionRepos} />} />
             <Route exact path='/questions/create' render={(routeProps) => <QuestionForm routeProps={routeProps} repos={questionRepos} />} />
             <Route path='/questions/edit/:id' render={(routeProps) => <QuestionForm routeProps={routeProps} repos={questionRepos} />} />
+
+            <Route path='/surveys' render={(routeProps) => <Surveys routeProps={routeProps} /> }/>
         </Layout>;
     }
 }
