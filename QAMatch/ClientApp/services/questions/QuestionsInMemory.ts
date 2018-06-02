@@ -3,7 +3,9 @@ import { IQuestionRepos } from './IQuestionRepos';
 import { Children } from 'react';
 
 export class QuestionsInMemory implements IQuestionRepos {
-    QuestionList: Question[];
+
+    private QuestionList: Question[];
+    private static LastId: number = 0;
 
     constructor() {
         this.QuestionList = QuestionsInMemory.createQuestions();
@@ -11,13 +13,13 @@ export class QuestionsInMemory implements IQuestionRepos {
 
     public static createQuestions(): Question[] {
         const questions: Question[] = [
-            this.createMCQuestion(1, 1,
+            this.createMCQuestion(QuestionsInMemory.nextId(), 1,
                 "title01",
                 "description1 bbb bbb bbb bbb bbb bbb bbb bbb bbb from memory class"),
-            this.createMCQuestion(2, 2, "title02", "description2 from memory class"),
-            this.createMCQuestion(3, 3, "title03", "description3 from memory class"),
-            this.createMCQuestion(4, 4, "title04", "description4 from memory class"),
-            this.createMCQuestion(5, 5, "title05", "description5 from memory class"),
+            this.createMCQuestion(QuestionsInMemory.nextId(), 2, "title02", "description2 from memory class"),
+            this.createMCQuestion(QuestionsInMemory.nextId(), 3, "title03", "description3 from memory class"),
+            this.createMCQuestion(QuestionsInMemory.nextId(), 4, "title04", "description4 from memory class"),
+            this.createMCQuestion(QuestionsInMemory.nextId(), 5, "title05", "description5 from memory class"),
         ];
         return questions;
     }
@@ -58,9 +60,10 @@ export class QuestionsInMemory implements IQuestionRepos {
         return choices.slice(0, num);
     }
 
-    private newId(): number {
+    private static nextId(): number {
         //TODO
-        return 100;
+        QuestionsInMemory.LastId = QuestionsInMemory.LastId + 1;
+        return QuestionsInMemory.LastId;
     }
 
     private findQuestionById(id: number) {
@@ -87,7 +90,7 @@ export class QuestionsInMemory implements IQuestionRepos {
         //TODO
         let done: boolean = false;
         if (!this.findQuestionById(question.id)) {
-            const id = this.newId();
+            const id = QuestionsInMemory.nextId();
             const questionNew = { ...question, id: id };
             this.QuestionList = this.QuestionList.concat(questionNew);
             done = true;
