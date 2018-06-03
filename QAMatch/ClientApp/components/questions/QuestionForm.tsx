@@ -85,8 +85,9 @@ export class QuestionForm extends React.Component<FormProps, FormState> {
         const choices: string[] = (formInput['choices'])
             ? formInput['choices'].split(',')
             : null;
-        const formData = { ...formInput, choices };
-        return formData;
+        return (choices)
+            ? { ...formInput, choices }
+            : formInput;
     }
 
     private GetUrlBefore(routeProps: RouteComponentProps<{}>, part: string) : string {
@@ -98,7 +99,8 @@ export class QuestionForm extends React.Component<FormProps, FormState> {
 
     private handleCancel(event) {
         event.preventDefault();
-        this.props.routeProps.history.push("/questions");
+        const masterUrl = this.GetUrlBefore(this.props.routeProps, '/Edit'); //check: Create ???
+        this.props.routeProps.history.push(masterUrl);
     }
 
     public render() {

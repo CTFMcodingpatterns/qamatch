@@ -12,6 +12,7 @@ export class QuestionsInMemory implements IQuestionRepos {
             .concat(QuestionsInMemory.createQuestions(1))
             .concat(QuestionsInMemory.createQuestions(2))
             .concat(QuestionsInMemory.createQuestions(3))
+            .concat(QuestionsInMemory.createQuestions(4))
             ;
     }
 

@@ -60,11 +60,12 @@ export class Questions extends React.Component<QuestionsProps, QuestionsState> {
     }
 
     public render() {
+        const sid = this.props.routeProps.match.params["sid"];
         let table = this.state.loading
             ? this.renderLoading()
             : this.renderTable(this.state.questions);
         return <div>
-            <h1>Questions</h1>
+            <h1>Survey {sid} / Questions</h1>
             {table}
             <button onClick={this.handleCreate}>Create</button>
             <button onClick={() => { this.handleFetch }}>Fetch</button>
