@@ -26,7 +26,7 @@ export class Questions extends React.Component<QuestionsProps, QuestionsState> {
         this.fetchAndSetQuestions();
         this.handleCreate = this.handleCreate.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
-        this.handleRead = this.handleRead.bind(this);
+        this.handleFetch = this.handleFetch.bind(this);
     }
 
     private fetchAndSetQuestions() {
@@ -52,7 +52,7 @@ export class Questions extends React.Component<QuestionsProps, QuestionsState> {
         console.log("handleDelete called");
     }
 
-    private handleRead(event) {
+    private handleFetch(event) {
         this.fetchAndSetQuestions();
     }
 
@@ -64,7 +64,7 @@ export class Questions extends React.Component<QuestionsProps, QuestionsState> {
             <h1>Questions</h1>
             {table}
             <button onClick={this.handleCreate}>Create</button>
-            <button onClick={() => { this.handleRead }}>Fetch</button>
+            <button onClick={() => { this.handleFetch }}>Fetch</button>
         </div>;
     }
 

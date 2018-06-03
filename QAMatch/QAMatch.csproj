@@ -5,8 +5,8 @@
     <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
     <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
     <IsPackable>false</IsPackable>
-    <AssemblyVersion>1.6.0.0</AssemblyVersion>
-    <FileVersion>1.6.0.0</FileVersion>
+    <AssemblyVersion>1.6.0.1</AssemblyVersion>
+    <FileVersion>1.6.0.1</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -30,6 +30,9 @@
     <None Remove="ClientApp\components\Surveys.tsx" />
     <None Remove="ClientApp\components\surveys\Surveys.tsx" />
     <None Remove="ClientApp\services\questions\Question.ts" />
+    <None Remove="ClientApp\services\surveys\ISurveyRepos.ts" />
+    <None Remove="ClientApp\services\surveys\Survey.ts" />
+    <None Remove="ClientApp\services\surveys\SurveysInMemory.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -40,6 +43,9 @@
     <TypeScriptCompile Include="ClientApp\components\Surveys.tsx" />
     <TypeScriptCompile Include="ClientApp\components\surveys\Surveys.tsx" />
     <TypeScriptCompile Include="ClientApp\services\questions\Question.ts" />
+    <TypeScriptCompile Include="ClientApp\services\surveys\ISurveyRepos.ts" />
+    <TypeScriptCompile Include="ClientApp\services\surveys\Survey.ts" />
+    <TypeScriptCompile Include="ClientApp\services\surveys\SurveysInMemory.ts" />
   </ItemGroup>
 
   <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">
