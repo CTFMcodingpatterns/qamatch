@@ -40,12 +40,12 @@ export class App extends React.Component<AppProps, AppState>  {
         return <Layout>
             <Route exact path='/' component={Home} />
 
-            <Route exact path='/questions' render={(routeProps) => <Questions routeProps={routeProps} repos={questionRepos} />} />
-            <Route exact path='/questions/detail/:id' render={(routeProps) => <QuestionDetail routeProps={routeProps} repos={questionRepos} />} />
-            <Route exact path='/questions/create' render={(routeProps) => <QuestionForm routeProps={routeProps} repos={questionRepos} />} />
-            <Route path='/questions/edit/:id' render={(routeProps) => <QuestionForm routeProps={routeProps} repos={questionRepos} />} />
+            <Route exact path='/surveys/:sid/questions' render={(routeProps) => <Questions routeProps={routeProps} repos={questionRepos} />} />
+            <Route exact path='/surveys/:sid/questions/detail/:id' render={(routeProps) => <QuestionDetail routeProps={routeProps} repos={questionRepos} />} />
+            <Route exact path='/surveys/:sid/questions/create' render={(routeProps) => <QuestionForm routeProps={routeProps} repos={questionRepos} />} />
+            <Route path='/surveys/:sid/questions/edit/:id' render={(routeProps) => <QuestionForm routeProps={routeProps} repos={questionRepos} />} />
 
-            <Route path='/surveys' render={(routeProps) => <Surveys routeProps={routeProps} repos={surveyRepos} /> }/>
+            <Route exact path='/surveys' render={(routeProps) => <Surveys routeProps={routeProps} repos={surveyRepos} /> }/>
         </Layout>;
     }
 }

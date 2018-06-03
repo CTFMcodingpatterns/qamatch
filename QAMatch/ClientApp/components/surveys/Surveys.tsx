@@ -58,6 +58,7 @@ export class Surveys extends React.Component<SurveysProps, SurveysState> {
                     <th style={{ width: '1%' }}>#</th>
                     <th style={{ width: '20%' }}>Title</th>
                     <th>Description</th>
+                    <th/>
                 </tr>
             </thead>
             <tbody>
@@ -69,6 +70,9 @@ export class Surveys extends React.Component<SurveysProps, SurveysState> {
                             <Link to={`${myUrl}/Detail/${survey.id}`}>{survey.title}</Link>
                         </td>
                         <td>{survey.description}</td>
+                        <td>
+                            <Link to={myUrl + "/" + survey.id + "/questions"}>Questions</Link>
+                        </td>
                     </tr>
                 )}
             </tbody>

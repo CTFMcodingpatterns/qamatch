@@ -61,18 +61,19 @@ export class QuestionForm extends React.Component<FormProps, FormState> {
     private handleSave(event) {
         //TODO
         event.preventDefault();
-        //const formInputs = this.state.formInput;
         const formData = this.ToFormData(this.state.formInput);
         const oldQuestion = this.state.question;
         const newQuestion: Question = { ...oldQuestion, ...formData };
         if (oldQuestion.id != null) {
+            const masterUrl = this.GetUrlBefore(this.props.routeProps, '/Edit');
             this.props.repos.updateQuestionAsync(newQuestion)
-                .then(result => this.props.routeProps.history.push("/questions"))
+                .then(result => this.props.routeProps.history.push(masterUrl))
                 .catch(reason => console.log("reason: " + reason));
 
         } else {
+            const masterUrl = this.GetUrlBefore(this.props.routeProps, '/Create');
             this.props.repos.createQuestionAsync(newQuestion)
-                .then(result => this.props.routeProps.history.push("/questions"))
+                .then(result => this.props.routeProps.history.push(masterUrl))
                 .catch(reason => console.log("reason: " + reason));
             console.log("handleSave / create called");
         }
@@ -84,6 +85,13 @@ export class QuestionForm extends React.Component<FormProps, FormState> {
             : null;
         const formData = { ...formInput, choices };
         return formData;
+    }
+
+    private GetUrlBefore(routeProps: RouteComponentProps<{}>, part: string) : string {
+        const endUrlPos = routeProps.match.url.lastIndexOf(part);
+        const masterUrl = routeProps.match.url.substr(0, endUrlPos);
+        console.log("masterUrl: " + masterUrl);
+        return masterUrl;
     }
 
     private handleCancel(event) {
