@@ -83,11 +83,9 @@ export class Questions extends React.Component<QuestionsProps, QuestionsState> {
         return <table className='table'>
             <thead>
                 <tr>
-                    <th>Kind</th>
                     <th style={{ width: '1%' }}>#</th>
                     <th style={{ width: '1%'}}>#</th>
                     <th style={{ width: '20%' }}>Title</th>
-                    <th>Description</th>
                     <th>Choices</th>
                     <th>Weight</th>
                     <th></th>
@@ -97,13 +95,11 @@ export class Questions extends React.Component<QuestionsProps, QuestionsState> {
             <tbody>
                 {sortedQuestions.map(question =>
                     <tr key={question.order}>
-                        <td>{question.kind}</td>
                         <td>{question.id}</td>
                         <td>{question.order}</td>
                         <td>
                             <Link to={`${myUrl}/Detail/${question.id}`}>{question.title}</Link>
                         </td>
-                        <td>{question.description}</td>
                         <td>{question.choices && question.choices.length}</td>
                         <td>{question.weight}</td>
                         <td>
