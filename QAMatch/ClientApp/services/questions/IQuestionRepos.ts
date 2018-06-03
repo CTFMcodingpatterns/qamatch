@@ -1,9 +1,9 @@
 ﻿import { Question } from './Question';
 
 export interface IQuestionRepos {
-    getQuestionsAsync(): Promise<Question[]>;
-    getQuestionByIdAsync(id: number): Promise<Question>;
-    createQuestionAsync(question: Question): Promise<boolean>;
-    updateQuestionAsync(question: Question): Promise<boolean>;
-    deleteQuestionAsync(id: number): Promise<boolean>;
+    getQuestionsAsync(sid: number): Promise<Question[]>;
+    getQuestionByIdAsync(sid: number, id: number): Promise<Question>;
+    createQuestionAsync(sid: number, question: Question): Promise<boolean>;
+    updateQuestionAsync(sid: number, question: Question): Promise<boolean>;
+    deleteQuestionAsync(sid: number, id: number): Promise<boolean>;
 }

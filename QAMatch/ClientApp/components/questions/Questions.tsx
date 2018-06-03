@@ -23,14 +23,15 @@ export class Questions extends React.Component<QuestionsProps, QuestionsState> {
             questions: [],
             loading: true
         };
-        this.fetchAndSetQuestions();
+        const sid: number = this.props.routeProps.match.params["sid"];
+        this.fetchAndSetQuestions(sid);
         this.handleCreate = this.handleCreate.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
         this.handleFetch = this.handleFetch.bind(this);
     }
 
-    private fetchAndSetQuestions() {
-        this.props.repos.getQuestionsAsync()
+    private fetchAndSetQuestions(sid: number) {
+        this.props.repos.getQuestionsAsync(sid)
             .then(data => this.setState({ questions: data, loading: false }))
             .catch(reason => console.log("reason: " + reason));
     }
@@ -45,15 +46,17 @@ export class Questions extends React.Component<QuestionsProps, QuestionsState> {
     private handleDelete(event, id: number) {
         //TODO
         event.preventDefault();
-        this.props.repos.deleteQuestionAsync(id)
-            .then(ok => this.props.repos.getQuestionsAsync())
+        const sid: number = this.props.routeProps.match.params["sid"];
+        this.props.repos.deleteQuestionAsync(sid, id)
+            .then(ok => this.props.repos.getQuestionsAsync(sid))
             .then(data => this.setState({ questions: data, loading: false }))
             .catch(reason => console.log("reason: " + reason));
         console.log("handleDelete called");
     }
 
     private handleFetch(event) {
-        this.fetchAndSetQuestions();
+        const sid = this.props.routeProps.match.params["sid"];
+        this.fetchAndSetQuestions(sid);
     }
 
     public render() {

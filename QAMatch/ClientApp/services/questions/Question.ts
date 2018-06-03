@@ -1,7 +1,8 @@
 ﻿export class Question {
-    kind: string;
     id: number;
+    surveyId: number;
     order: number;
+    kind: string;
     title: string;
     description: string;
     choices: string[] | null;

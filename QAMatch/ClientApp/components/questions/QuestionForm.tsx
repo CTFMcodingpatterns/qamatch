@@ -23,9 +23,10 @@ export class QuestionForm extends React.Component<FormProps, FormState> {
             question: null,
             formInput: {}
         };
+        const sid: number = this.props.routeProps.match.params["sid"];
         const id: number = this.props.routeProps.match.params["id"];
         if (id != null) {
-            this.fetchAndSetQuestion(id);
+            this.fetchAndSetQuestion(sid, id);
         } else {
             this.state = {
                 loading: false, question: new Question(), formInput: {} };
@@ -35,8 +36,8 @@ export class QuestionForm extends React.Component<FormProps, FormState> {
         this.handleChange = this.handleChange.bind(this);
     }
 
-    private fetchAndSetQuestion(id: number) {
-        this.props.repos.getQuestionByIdAsync(id)
+    private fetchAndSetQuestion(sid: number, id: number) {
+        this.props.repos.getQuestionByIdAsync(sid, id)
             .then(data => this.setState({
                 loading: false,
                 question: data
@@ -61,18 +62,19 @@ export class QuestionForm extends React.Component<FormProps, FormState> {
     private handleSave(event) {
         //TODO
         event.preventDefault();
+        const sid = this.props.routeProps.match.params["sid"];
         const formData = this.ToFormData(this.state.formInput);
         const oldQuestion = this.state.question;
         const newQuestion: Question = { ...oldQuestion, ...formData };
         if (oldQuestion.id != null) {
             const masterUrl = this.GetUrlBefore(this.props.routeProps, '/Edit');
-            this.props.repos.updateQuestionAsync(newQuestion)
+            this.props.repos.updateQuestionAsync(sid, newQuestion)
                 .then(result => this.props.routeProps.history.push(masterUrl))
                 .catch(reason => console.log("reason: " + reason));
 
         } else {
             const masterUrl = this.GetUrlBefore(this.props.routeProps, '/Create');
-            this.props.repos.createQuestionAsync(newQuestion)
+            this.props.repos.createQuestionAsync(sid, newQuestion)
                 .then(result => this.props.routeProps.history.push(masterUrl))
                 .catch(reason => console.log("reason: " + reason));
             console.log("handleSave / create called");

@@ -8,26 +8,31 @@ export class QuestionsInMemory implements IQuestionRepos {
     private static LastId: number = 0;
 
     constructor() {
-        this.QuestionList = QuestionsInMemory.createQuestions();
+        this.QuestionList = []
+            .concat(QuestionsInMemory.createQuestions(1))
+            .concat(QuestionsInMemory.createQuestions(2))
+            .concat(QuestionsInMemory.createQuestions(3))
+            ;
     }
 
-    public static createQuestions(): Question[] {
+    public static createQuestions(sid: number): Question[] {
         const questions: Question[] = [
-            this.createMCQuestion(QuestionsInMemory.nextId(), 1,
+            this.createMCQuestion(QuestionsInMemory.nextId(), sid, 1,
                 "title01",
                 "description1 bbb bbb bbb bbb bbb bbb bbb bbb bbb from memory class"),
-            this.createMCQuestion(QuestionsInMemory.nextId(), 2, "title02", "description2 from memory class"),
-            this.createMCQuestion(QuestionsInMemory.nextId(), 3, "title03", "description3 from memory class"),
-            this.createMCQuestion(QuestionsInMemory.nextId(), 4, "title04", "description4 from memory class"),
-            this.createMCQuestion(QuestionsInMemory.nextId(), 5, "title05", "description5 from memory class"),
+            this.createMCQuestion(QuestionsInMemory.nextId(), sid, 2, "title02", "description2 from memory class"),
+            this.createMCQuestion(QuestionsInMemory.nextId(), sid, 3, "title03", "description3 from memory class"),
+            this.createMCQuestion(QuestionsInMemory.nextId(), sid, 4, "title04", "description4 from memory class"),
+            this.createMCQuestion(QuestionsInMemory.nextId(), sid, 5, "title05", "description5 from memory class"),
         ];
         return questions;
     }
 
-    public static createMCQuestion(id: number, order: number, title: string, desc?: string, choices?: string[], weight?: number): Question {
+    public static createMCQuestion(id: number, sid: number, order: number, title: string, desc?: string, choices?: string[], weight?: number): Question {
         const question: Question = {
             kind: "multiplechoice",
             id: id,
+            surveyId: sid,
             order: order,
             title: title,
             description: desc || null,
@@ -66,19 +71,21 @@ export class QuestionsInMemory implements IQuestionRepos {
         return QuestionsInMemory.LastId;
     }
 
-    private findQuestionById(id: number) {
+    private findQuestionById(sid: number, id: number) {
         return this.QuestionList
+            .filter(question => question.surveyId == sid)
             .filter(question => question.id == id)[0];
     }
 
-    public getQuestionsAsync(): Promise<Question[]> {
-        const questions = this.QuestionList;
+    public getQuestionsAsync(sid: number): Promise<Question[]> {
+        const questions: Question[] = this.QuestionList
+            .filter(q => q.surveyId == sid);
         const promise = new Promise<Question[]>((resolve, reject) => resolve(questions));
         return promise;
     }
 
-    public getQuestionByIdAsync(id: number): Promise<Question> {
-        const question: Question = this.findQuestionById(id);  
+    public getQuestionByIdAsync(sid: number, id: number): Promise<Question> {
+        const question: Question = this.findQuestionById(sid, id);  
         const promise = new Promise<Question>((resolve, reject) => {
             if (question != null) resolve(question)
             else reject("no data");
@@ -86,27 +93,14 @@ export class QuestionsInMemory implements IQuestionRepos {
         return promise;
     }
 
-    createQuestionAsync(question: Question): Promise<boolean> {
+    createQuestionAsync(sid: number, question: Question): Promise<boolean> {
         //TODO
         let done: boolean = false;
-        if (!this.findQuestionById(question.id)) {
+        if (!this.findQuestionById(sid, question.id)) {
             const id = QuestionsInMemory.nextId();
-            const questionNew = { ...question, id: id };
-            this.QuestionList = this.QuestionList.concat(questionNew);
-            done = true;
-        }
-        const promise = new Promise<boolean>((resolve, reject) => {
-            if (done) resolve(done)
-            else reject("not done");
-        });
-        return promise;
-    }
-
-    updateQuestionAsync(question: Question): Promise<boolean> {
-        let done: boolean = false;
-        if (this.findQuestionById(question.id)) {
+            const questionNew = { ...question, surveyId: sid, id: id };
             this.QuestionList = this.QuestionList
-                .map(qil => (qil.id == question.id) ? question : qil);
+                .concat(questionNew);
             done = true;
         }
         const promise = new Promise<boolean>((resolve, reject) => {
@@ -116,12 +110,26 @@ export class QuestionsInMemory implements IQuestionRepos {
         return promise;
     }
 
-    deleteQuestionAsync(id: number): Promise<boolean> {
+    updateQuestionAsync(sid: number, question: Question): Promise<boolean> {
+        let done: boolean = false;
+        if (this.findQuestionById(sid, question.id)) {
+            this.QuestionList = this.QuestionList
+                .map(qil => (qil.surveyId == sid && qil.id == question.id) ? question : qil);
+            done = true;
+        }
+        const promise = new Promise<boolean>((resolve, reject) => {
+            if (done) resolve(done)
+            else reject("not done");
+        });
+        return promise;
+    }
+
+    deleteQuestionAsync(sid: number, id: number): Promise<boolean> {
         //TODO
         let done: boolean = false;
-        if (this.findQuestionById(id)) {
+        if (this.findQuestionById(sid, id)) {
             this.QuestionList = this.QuestionList
-                .filter(q => (q.id != id));
+                .filter(q => !(q.surveyId == sid && q.id == id));
             done = true;
         }
         const promise = new Promise<boolean>((resolve, reject) => {

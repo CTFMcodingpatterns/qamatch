@@ -21,12 +21,13 @@ export class QuestionDetail extends React.Component<DetailProps, DetailState> {
             loading: true,
             question: null
         };
+        const sid: number = this.props.routeProps.match.params["sid"];
         const id: number = this.props.routeProps.match.params["id"];
-        this.fetchAndSetQuestion(id);
+        this.fetchAndSetQuestion(sid, id);
     }
 
-    private fetchAndSetQuestion(id: number) {
-        this.props.repos.getQuestionByIdAsync(id)
+    private fetchAndSetQuestion(sid: number, id: number) {
+        this.props.repos.getQuestionByIdAsync(sid, id)
             .then(data => this.setState({question: data, loading: false}))
             .catch(reason => console.log("reason: " + reason));
     }
@@ -66,6 +67,10 @@ export class QuestionDetail extends React.Component<DetailProps, DetailState> {
                 <tr>
                     <td>Id: </td>
                     <td>{question.id}</td>
+                </tr>
+                <tr>
+                    <td>SId: </td>
+                    <td>{question.surveyId}</td>
                 </tr>
                 <tr>
                     <td>Order: </td>
