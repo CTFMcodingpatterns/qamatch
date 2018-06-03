@@ -5,8 +5,8 @@
     <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
     <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
     <IsPackable>false</IsPackable>
-    <AssemblyVersion>1.7.0.2</AssemblyVersion>
-    <FileVersion>1.7.0.2</FileVersion>
+    <AssemblyVersion>1.7.0.3</AssemblyVersion>
+    <FileVersion>1.7.0.3</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -23,12 +23,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\components\answers\Answers.tsx" />
     <None Remove="ClientApp\components\App.tsx" />
     <None Remove="ClientApp\components\QuestionDetail.tsx" />
     <None Remove="ClientApp\components\QuestionForm.tsx" />
     <None Remove="ClientApp\components\Questions.tsx" />
     <None Remove="ClientApp\components\Surveys.tsx" />
     <None Remove="ClientApp\components\surveys\Surveys.tsx" />
+    <None Remove="ClientApp\services\answers\Answer.ts" />
     <None Remove="ClientApp\services\questions\Question.ts" />
     <None Remove="ClientApp\services\surveys\ISurveyRepos.ts" />
     <None Remove="ClientApp\services\surveys\Survey.ts" />
@@ -36,12 +38,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\components\answers\Answers.tsx" />
     <TypeScriptCompile Include="ClientApp\components\App.tsx" />
     <TypeScriptCompile Include="ClientApp\components\questions\QuestionDetail.tsx" />
     <TypeScriptCompile Include="ClientApp\components\questions\QuestionForm.tsx" />
     <TypeScriptCompile Include="ClientApp\components\questions\Questions.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Surveys.tsx" />
     <TypeScriptCompile Include="ClientApp\components\surveys\Surveys.tsx" />
+    <TypeScriptCompile Include="ClientApp\services\answers\Answer.ts" />
     <TypeScriptCompile Include="ClientApp\services\questions\Question.ts" />
     <TypeScriptCompile Include="ClientApp\services\surveys\ISurveyRepos.ts" />
     <TypeScriptCompile Include="ClientApp\services\surveys\Survey.ts" />
