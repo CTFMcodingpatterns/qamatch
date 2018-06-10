@@ -16,7 +16,7 @@ export class QuestionsInMemory implements IQuestionRepos {
             ;
     }
 
-    public static createQuestions(sid: number): Question[] {
+    private static createQuestions(sid: number): Question[] {
         const questions: Question[] = [
             this.createMCQuestion(QuestionsInMemory.nextId(), sid, 1,
                 "title01",
@@ -29,7 +29,7 @@ export class QuestionsInMemory implements IQuestionRepos {
         return questions;
     }
 
-    public static createMCQuestion(id: number, sid: number, order: number, title: string, desc?: string, choices?: string[], weight?: number): Question {
+    private static createMCQuestion(id: number, sid: number, order: number, title: string, desc?: string, choices?: string[], weight?: number): Question {
         const question: Question = {
             kind: "multiplechoice",
             id: id,
@@ -44,7 +44,7 @@ export class QuestionsInMemory implements IQuestionRepos {
     }
 
     //TODO: create separate Question Type
-    public static createConsensChoices(): string[] {
+    private static createConsensChoices(): string[] {
         const choices: string[] = [
             "agree 100%",
             "agree 50%",
@@ -55,7 +55,7 @@ export class QuestionsInMemory implements IQuestionRepos {
         return choices;
     }
 
-    public static createColorChoices(num: number): string[] {
+    private static createColorChoices(num: number): string[] {
         const choices: string[] = [
             "red",
             "green",
@@ -94,7 +94,7 @@ export class QuestionsInMemory implements IQuestionRepos {
         return promise;
     }
 
-    createQuestionAsync(sid: number, question: Question): Promise<boolean> {
+    public createQuestionAsync(sid: number, question: Question): Promise<boolean> {
         //TODO
         let done: boolean = false;
         if (!this.findQuestionById(sid, question.id)) {
@@ -111,7 +111,7 @@ export class QuestionsInMemory implements IQuestionRepos {
         return promise;
     }
 
-    updateQuestionAsync(sid: number, question: Question): Promise<boolean> {
+    public updateQuestionAsync(sid: number, question: Question): Promise<boolean> {
         let done: boolean = false;
         if (this.findQuestionById(sid, question.id)) {
             this.QuestionList = this.QuestionList
@@ -125,7 +125,7 @@ export class QuestionsInMemory implements IQuestionRepos {
         return promise;
     }
 
-    deleteQuestionAsync(sid: number, id: number): Promise<boolean> {
+    public deleteQuestionAsync(sid: number, id: number): Promise<boolean> {
         //TODO
         let done: boolean = false;
         if (this.findQuestionById(sid, id)) {

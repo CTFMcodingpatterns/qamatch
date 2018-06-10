@@ -3,21 +3,27 @@ import { RouteComponentProps } from 'react-router';
 import { Link, NavLink } from 'react-router-dom';
 import 'isomorphic-fetch';
 import { Answer } from '../../services/answers/Answer';
+import { IAnswerRepos } from '../../services/answers/IAnswerRepos';
 //import { Question } from '../../services/questions/Question';
 //import { IQuestionRepos } from '../../services/questions/IQuestionRepos';
 
 interface AnswersProps {
     routeProps: RouteComponentProps<{}>;
+    repos: IAnswerRepos;
 }
 
 interface AnswersState {
-    loading: boolean;
     answers: Answer[];
+    loading: boolean;
 }
 
 export class Answers extends React.Component<AnswersProps, AnswersState> {
     constructor(props: AnswersProps) {
         super(props);
+        this.state = {
+            answers: [],
+            loading: false,
+        };
     }
 
     public render() {
@@ -57,12 +63,12 @@ export class Answers extends React.Component<AnswersProps, AnswersState> {
                         <td>{answer.id}</td>
                         <td>{answer.order}</td>
                         <td>
-                            <Link to={`${myUrl}/Detail/${answer.id}`}>{answer.title}</Link>
+                            <Link to={`${myUrl}/${answer.id}/detail`}>{answer.title}</Link>
                         </td>
                         <td>{answer.choices && answer.choices.length}</td>
                         <td>{answer.weight}</td>
                         <td>
-                            <Link to={myUrl + "/Edit/" + answer.id}>Edit</Link>
+                            <Link to={myUrl + "/" + answer.id + "/edit"}>Edit</Link>
                         </td>
                     </tr>
                 )}
