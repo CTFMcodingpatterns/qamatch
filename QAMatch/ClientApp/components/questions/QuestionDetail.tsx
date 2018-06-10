@@ -22,8 +22,8 @@ export class QuestionDetail extends React.Component<DetailProps, DetailState> {
             question: null
         };
         const sid: number = this.props.routeProps.match.params["sid"];
-        const id: number = this.props.routeProps.match.params["id"];
-        this.fetchAndSetQuestion(sid, id);
+        const qid: number = this.props.routeProps.match.params["qid"];
+        this.fetchAndSetQuestion(sid, qid);
     }
 
     private fetchAndSetQuestion(sid: number, id: number) {
@@ -46,7 +46,7 @@ export class QuestionDetail extends React.Component<DetailProps, DetailState> {
         return <div>
             <p><em>Loading Question Detail ...</em></p>
             <p>route path: {this.props.routeProps.match.path}</p>
-            <p>route params.id: {this.props.routeProps.match.params["id"]}</p>
+            <p>route params.qid: {this.props.routeProps.match.params["qid"]}</p>
         </div>;
     }
 

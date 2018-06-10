@@ -24,9 +24,9 @@ export class QuestionForm extends React.Component<FormProps, FormState> {
             formInput: {}
         };
         const sid: number = this.props.routeProps.match.params["sid"];
-        const id: number = this.props.routeProps.match.params["id"];
-        if (id != null) {
-            this.fetchAndSetQuestion(sid, id);
+        const qid: number = this.props.routeProps.match.params["qid"];
+        if (qid != null) {
+            this.fetchAndSetQuestion(sid, qid);
         } else {
             this.state = {
                 loading: false, question: new Question(), formInput: {} };
