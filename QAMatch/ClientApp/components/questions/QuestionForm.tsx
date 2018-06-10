@@ -36,8 +36,8 @@ export class QuestionForm extends React.Component<FormProps, FormState> {
         this.handleChange = this.handleChange.bind(this);
     }
 
-    private fetchAndSetQuestion(sid: number, id: number) {
-        this.props.repos.getQuestionByIdAsync(sid, id)
+    private fetchAndSetQuestion(sid: number, qid: number) {
+        this.props.repos.getQuestionByIdAsync(sid, qid)
             .then(data => this.setState({
                 loading: false,
                 question: data
@@ -67,15 +67,13 @@ export class QuestionForm extends React.Component<FormProps, FormState> {
         const oldQuestion = this.state.question;
         const newQuestion: Question = { ...oldQuestion, ...formData };
         if (oldQuestion.id != null) {
-            const masterUrl = this.GetUrlBefore(this.props.routeProps, '/Edit');
             this.props.repos.updateQuestionAsync(sid, newQuestion)
-                .then(result => this.props.routeProps.history.push(masterUrl))
+                .then(result => this.props.routeProps.history.goBack())
                 .catch(reason => console.log("reason: " + reason));
 
         } else {
-            const masterUrl = this.GetUrlBefore(this.props.routeProps, '/Create');
             this.props.repos.createQuestionAsync(sid, newQuestion)
-                .then(result => this.props.routeProps.history.push(masterUrl))
+                .then(result => this.props.routeProps.history.goBack())
                 .catch(reason => console.log("reason: " + reason));
             console.log("handleSave / create called");
         }
@@ -90,17 +88,9 @@ export class QuestionForm extends React.Component<FormProps, FormState> {
             : formInput;
     }
 
-    private GetUrlBefore(routeProps: RouteComponentProps<{}>, part: string) : string {
-        const endUrlPos = routeProps.match.url.lastIndexOf(part);
-        const masterUrl = routeProps.match.url.substr(0, endUrlPos);
-        console.log("masterUrl: " + masterUrl);
-        return masterUrl;
-    }
-
     private handleCancel(event) {
         event.preventDefault();
-        const masterUrl = this.GetUrlBefore(this.props.routeProps, '/Edit'); //check: Create ???
-        this.props.routeProps.history.push(masterUrl);
+        this.props.routeProps.history.goBack();
     }
 
     public render() {

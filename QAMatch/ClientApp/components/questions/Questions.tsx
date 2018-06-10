@@ -99,12 +99,12 @@ export class Questions extends React.Component<QuestionsProps, QuestionsState> {
                         <td>{question.id}</td>
                         <td>{question.order}</td>
                         <td>
-                            <Link to={`${myUrl}/Detail/${question.id}`}>{question.title}</Link>
+                            <Link to={`${myUrl}/${question.id}/detail`}>{question.title}</Link>
                         </td>
                         <td>{question.choices && question.choices.length}</td>
                         <td>{question.weight}</td>
                         <td>
-                            <Link to={myUrl + "/Edit/" + question.id}>Edit</Link>
+                            <Link to={myUrl + "/" + question.id + "/edit/"}>Edit</Link>
                         </td>
                         <td>
                             <a href="#" onClick={(e) => this.handleDelete(e, question.id)}>Delete</a>
