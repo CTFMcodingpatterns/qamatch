@@ -65,7 +65,7 @@ export class Answers extends React.Component<AnswersProps, AnswersState> {
                         <td>
                             <Link to={`${myUrl}/${answer.id}/detail`}>{answer.title}</Link>
                         </td>
-                        <td>{answer.choices && answer.choices.length}</td>
+                        <td>{answer.choices && Object.keys(answer.choices).length}</td>
                         <td>{answer.weight}</td>
                         <td>
                             <Link to={myUrl + "/" + answer.id + "/edit"}>Edit</Link>

@@ -3,6 +3,6 @@
     order: number;
     kind: string;
     title: string;
-    choices: string[] | null;
+    choices: {} | null;
     weight: number | null;
 }
