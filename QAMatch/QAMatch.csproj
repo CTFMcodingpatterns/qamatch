@@ -5,8 +5,8 @@
     <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
     <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
     <IsPackable>false</IsPackable>
-    <AssemblyVersion>1.8.0.1</AssemblyVersion>
-    <FileVersion>1.8.0.1</FileVersion>
+    <AssemblyVersion>1.8.0.2</AssemblyVersion>
+    <FileVersion>1.8.0.2</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <None Remove="ClientApp\components\answers\Answers.tsx" />
+    <None Remove="ClientApp\components\answers\QAndA.ts" />
     <None Remove="ClientApp\components\App.tsx" />
     <None Remove="ClientApp\components\QuestionDetail.tsx" />
     <None Remove="ClientApp\components\QuestionForm.tsx" />
@@ -31,6 +32,7 @@
     <None Remove="ClientApp\components\Surveys.tsx" />
     <None Remove="ClientApp\components\surveys\Surveys.tsx" />
     <None Remove="ClientApp\services\answers\Answer.ts" />
+    <None Remove="ClientApp\services\answers\AnswersInMemory.ts" />
     <None Remove="ClientApp\services\answers\IAnswerRepos.ts" />
     <None Remove="ClientApp\services\questions\Question.ts" />
     <None Remove="ClientApp\services\surveys\ISurveyRepos.ts" />
@@ -40,6 +42,7 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\components\answers\Answers.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\answers\QAndA.ts" />
     <TypeScriptCompile Include="ClientApp\components\App.tsx" />
     <TypeScriptCompile Include="ClientApp\components\questions\QuestionDetail.tsx" />
     <TypeScriptCompile Include="ClientApp\components\questions\QuestionForm.tsx" />
@@ -47,6 +50,7 @@
     <TypeScriptCompile Include="ClientApp\components\Surveys.tsx" />
     <TypeScriptCompile Include="ClientApp\components\surveys\Surveys.tsx" />
     <TypeScriptCompile Include="ClientApp\services\answers\Answer.ts" />
+    <TypeScriptCompile Include="ClientApp\services\answers\AnswersInMemory.ts" />
     <TypeScriptCompile Include="ClientApp\services\answers\IAnswerRepos.ts" />
     <TypeScriptCompile Include="ClientApp\services\questions\Question.ts" />
     <TypeScriptCompile Include="ClientApp\services\surveys\ISurveyRepos.ts" />

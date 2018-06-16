@@ -115,6 +115,7 @@ export class QuestionForm extends React.Component<FormProps, FormState> {
         //TODO
         const orderStr: string = question.order && question.order.toString();
         const weightStr: string = question.weight && question.weight.toString();
+        const scaleStr: string = question.scale && question.scale.toString();
 
         return <form onSubmit={this.handleSave}>
             <div className="form-group-row">
@@ -151,6 +152,12 @@ export class QuestionForm extends React.Component<FormProps, FormState> {
                 <label className="control-label col-sm-3" htmlFor="weight">weight</label>
                 <div className="col-sm-9">
                     <input className="form-control" type="text" name="weight" defaultValue={weightStr} onChange={this.handleChange} />
+                </div>
+            </div>
+            <div className="form-group-row">
+                <label className="control-label col-sm-3" htmlFor="scale">scale</label>
+                <div className="col-sm-9">
+                    <input className="form-control" type="text" name="scale" defaultValue={scaleStr} onChange={this.handleChange} />
                 </div>
             </div>
             <div className="form-group-row">

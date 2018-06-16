@@ -89,6 +89,10 @@ export class QuestionDetail extends React.Component<DetailProps, DetailState> {
                     <td>{question.weight}</td>
                 </tr>
                 <tr>
+                    <td>Scale: </td>
+                    <td>{question.scale}</td>
+                </tr>
+                <tr>
                     <td>Choices: </td>
                     <td>{question.choices && question.choices.map(choice =>
                         <p key={choice}>{choice}</p>)}

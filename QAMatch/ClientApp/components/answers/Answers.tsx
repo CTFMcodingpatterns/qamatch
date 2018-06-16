@@ -4,16 +4,18 @@ import { Link, NavLink } from 'react-router-dom';
 import 'isomorphic-fetch';
 import { Answer } from '../../services/answers/Answer';
 import { IAnswerRepos } from '../../services/answers/IAnswerRepos';
-//import { Question } from '../../services/questions/Question';
-//import { IQuestionRepos } from '../../services/questions/IQuestionRepos';
+import { Question } from '../../services/questions/Question';
+import { IQuestionRepos } from '../../services/questions/IQuestionRepos';
+import { QAndA } from './QAndA';
 
 interface AnswersProps {
     routeProps: RouteComponentProps<{}>;
-    repos: IAnswerRepos;
+    answerRepos: IAnswerRepos;
+    questionRepos: IQuestionRepos;
 }
 
 interface AnswersState {
-    answers: Answer[];
+    qandas: QAndA[];
     loading: boolean;
 }
 
@@ -21,7 +23,7 @@ export class Answers extends React.Component<AnswersProps, AnswersState> {
     constructor(props: AnswersProps) {
         super(props);
         this.state = {
-            answers: [],
+            qandas: [],
             loading: false,
         };
     }
@@ -30,7 +32,7 @@ export class Answers extends React.Component<AnswersProps, AnswersState> {
         const sid = this.props.routeProps.match.params["sid"];
         let table = this.state.loading
             ? this.renderLoading()
-            : this.renderTable(this.state.answers);
+            : this.renderTable(this.state.qandas);
         return <div>
             <h1>Survey {sid} / Answers</h1>
             {table}
@@ -41,11 +43,11 @@ export class Answers extends React.Component<AnswersProps, AnswersState> {
         return <p><em>Loading Answers...</em></p >;
     }
 
-    private renderTable(answers: Answer[]) {
+    private renderTable(qandas: QAndA[]) {
         const myUrl = this.props.routeProps.match.url;
-        const sortedAnswers = answers
+        const sortedQandas = qandas
             .slice()
-            .sort((q1, q2) => q1.order - q2.order);
+            .sort((qa1, qa2) => qa1.question.order - qa2.question.order);
         return <table className='table'>
             <thead>
                 <tr>
@@ -58,17 +60,17 @@ export class Answers extends React.Component<AnswersProps, AnswersState> {
                 </tr>
             </thead>
             <tbody>
-                {sortedAnswers.map(answer =>
-                    <tr key={answer.order}>
-                        <td>{answer.id}</td>
-                        <td>{answer.order}</td>
+                {sortedQandas.map(qanda =>
+                    <tr key={qanda.answer.id}>
+                        <td>{qanda.answer.id}</td>
+                        <td>{qanda.question.order}</td>
                         <td>
-                            <Link to={`${myUrl}/${answer.id}/detail`}>{answer.title}</Link>
+                            <Link to={`${myUrl}/${qanda.answer.id}/detail`}>{qanda.question.title}</Link>
                         </td>
-                        <td>{answer.choices && Object.keys(answer.choices).length}</td>
-                        <td>{answer.weight}</td>
+                        <td>{qanda.question.choices && Object.keys(qanda.question.choices).length}</td>
+                        <td>{qanda.answer.weight}</td>
                         <td>
-                            <Link to={myUrl + "/" + answer.id + "/edit"}>Edit</Link>
+                            <Link to={myUrl + "/" + qanda.answer.id + "/edit"}>Edit</Link>
                         </td>
                     </tr>
                 )}

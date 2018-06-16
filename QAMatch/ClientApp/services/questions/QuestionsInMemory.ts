@@ -1,6 +1,6 @@
 ﻿import { Question } from './Question';
 import { IQuestionRepos } from './IQuestionRepos';
-import { Children } from 'react';
+//import { Children } from 'react';
 
 export class QuestionsInMemory implements IQuestionRepos {
 
@@ -38,6 +38,7 @@ export class QuestionsInMemory implements IQuestionRepos {
             title: title,
             description: desc || null,
             choices: choices || this.createConsensChoices(),
+            scale: null,
             weight: weight || 0
         };
         return question;

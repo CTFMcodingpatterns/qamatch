@@ -1,8 +1,8 @@
 ﻿export class Answer {
     id: number;
-    order: number;
-    kind: string;
-    title: string;
+    questionId: number;
+    surveyId: number;
+    userId: number;
     choices: {} | null;
     weight: number | null;
 }

@@ -1,9 +1,13 @@
 ﻿import { Answer } from './Answer';
 
 export interface IAnswerRepos {
-    getAnswersAsync(sid: number): Promise<Answer[]>;
-    getAnswerByIdAsync(sid: number, id: number): Promise<Answer>;
-    createAnswerAsync(sid: number, answer: Answer): Promise<boolean>;
-    updateAnswerAsync(sid: number, answer: Answer): Promise<boolean>;
-    deleteAnswerAsync(sid: number, id: number): Promise<boolean>;
+    getAnswersAsync(uid: number, sid: number): Promise<Answer[]>;
+    getAnswerById(id: number): Promise<Answer>;
+    getAnswerByUSQIdAsync(uid: number, sid: number, qid: number): Promise<Answer>;
+
+    createAnswerAsync(answer: Answer): Promise<number>;
+
+    updateAnswerAsync(answer: Answer): Promise<boolean>;
+
+    deleteAnswerByUSQIdAsync(uid: number, sid: number, qid: number): Promise<boolean>;
 }

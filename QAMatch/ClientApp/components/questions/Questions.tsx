@@ -88,6 +88,7 @@ export class Questions extends React.Component<QuestionsProps, QuestionsState> {
                     <th style={{ width: '1%'}}>#</th>
                     <th style={{ width: '20%' }}>Title</th>
                     <th>Choices</th>
+                    <th>Scale</th>
                     <th>Weight</th>
                     <th></th>
                     <th></th>
@@ -102,6 +103,7 @@ export class Questions extends React.Component<QuestionsProps, QuestionsState> {
                             <Link to={`${myUrl}/${question.id}/detail`}>{question.title}</Link>
                         </td>
                         <td>{question.choices && question.choices.length}</td>
+                        <td>{question.scale}</td>
                         <td>{question.weight}</td>
                         <td>
                             <Link to={myUrl + "/" + question.id + "/edit/"}>Edit</Link>
