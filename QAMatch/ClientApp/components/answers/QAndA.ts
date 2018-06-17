@@ -3,5 +3,5 @@ import { Answer } from '../../services/answers/Answer';
 
 export class QAndA {
     question: Question;
-    answer: Answer;
+    answer: Answer | null; //check
 }

@@ -47,9 +47,11 @@ export class MyAnswersInMemory implements IAnswerRepos {
 
     private createAnswers(uid: number, sid: number): Answer[] {
         const answers: Answer[] = [
-            { id: 1, userId: uid, surveyId: sid, questionId: 0, choices: {}, scale: 0, weight: 0 },
-            { id: 2, userId: uid, surveyId: sid, questionId: 0, choices: {}, scale: 0, weight: 0 },
-            { id: 3, userId: uid, surveyId: sid, questionId: 0, choices: {}, scale: 0, weight: 0 },
+            { id: 1, userId: uid, surveyId: sid, questionId: 1, choices: {}, scale: 0, weight: 0 },
+            { id: 2, userId: uid, surveyId: sid, questionId: 2, choices: {}, scale: 0, weight: 0 },
+            { id: 3, userId: uid, surveyId: sid, questionId: 3, choices: {}, scale: 0, weight: 0 },
+            { id: 4, userId: uid, surveyId: sid, questionId: 4, choices: {}, scale: 0, weight: 0 },
+            //{ id: 5, userId: uid, surveyId: sid, questionId: 5, choices: {}, scale: 0, weight: 0 },
         ];
         return answers;
     }

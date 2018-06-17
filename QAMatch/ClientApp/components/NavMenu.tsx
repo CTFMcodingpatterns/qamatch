@@ -34,6 +34,12 @@ export class NavMenu extends React.Component<{}, {}> {
                                     <span className='glyphicon glyphicon-th-list'></span> Survey {routeProps.match.params.sid} Questions
                                 </NavLink>
                             </li>} />
+                        <Route path='/surveys/:sid/answers' render={(routeProps) =>
+                            <li>
+                                <NavLink to={routeProps.match.url} activeClassName='active'>
+                                    <span className='glyphicon glyphicon-th-list'></span> Survey {routeProps.match.params.sid} Answers
+                                </NavLink>
+                            </li>} />
                     </ul>
                 </div>
             </div>

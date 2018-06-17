@@ -24,41 +24,35 @@ export class Answers extends React.Component<AnswersProps, AnswersState> {
         super(props);
         this.state = {
             qandas: [],
-            loading: false,
+            loading: true,
         };
         const uid: number = 0; //todo
         const sid: number = this.props.routeProps.match.params["sid"];
-        this.fetchAndSetQuestions(uid, sid);
+        this.fetchAndSetQandas(uid, sid);
     }
 
-    private fetchAndSetQuestions(uid: number, sid: number) {
-        //TODO
-        //this.props.questionRepos.getQuestionsAsync(sid)
-        //    .then(data => {
-        //        return {
-        //            questions: data,
-        //            answers: this.props.answerRepos.getAnswersAsync(uid, sid)
-        //        }
-        //    })
-        //    .then(data => this.mergeQsAndAs(data))
-        //    .then(data => this.setState({ loading: false, qandas: data }))
-        //    .catch(reason => console.log("reason: " + reason));
+    private fetchAndSetQandas(uid: number, sid: number) {
         const questionsPromise = this.props.questionRepos.getQuestionsAsync(sid);
         const answersPromise = this.props.answerRepos.getAnswersAsync(uid, sid);
         Promise.all([questionsPromise, answersPromise])
-            .then(data => this.mergeQsAndAs(data))
-            .then(data => this.setState({ loading: false, qandas: data }));
+            .then(data => this.mergeQandas(data))
+            .then(data => this.setState((prev, props) => {
+                return {loading: false, qandas: data}
+            }))
+            //.then(data => this.setState({ loading: false, qandas: data }))
+            .catch(reason => console.log("no qandas reason: " + reason));
     }
 
-    private mergeQsAndAs(data: [Question[],Answer[]]): QAndA[] {
-        //TODO
+    private mergeQandas(data: [Question[],Answer[]]): QAndA[] {
         const questions: Question[] = data[0];
         const answers: Answer[] = data[1];
         const qandas: QAndA[] = questions
             .map(question => {
-                const answer = answers.filter(answer => answer.questionId == question.id)[0];
-                return { question, answer }
+                const answer = answers.filter(answer => answer.questionId == question.id)[0] || null;
+                const qanda: QAndA = question && answer && { question, answer };
+                return qanda;
             })
+            .filter(qanda => qanda != null);
         return qandas;
     }
 
