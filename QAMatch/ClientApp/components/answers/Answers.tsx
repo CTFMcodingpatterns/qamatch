@@ -26,6 +26,40 @@ export class Answers extends React.Component<AnswersProps, AnswersState> {
             qandas: [],
             loading: false,
         };
+        const uid: number = 0; //todo
+        const sid: number = this.props.routeProps.match.params["sid"];
+        this.fetchAndSetQuestions(uid, sid);
+    }
+
+    private fetchAndSetQuestions(uid: number, sid: number) {
+        //TODO
+        //this.props.questionRepos.getQuestionsAsync(sid)
+        //    .then(data => {
+        //        return {
+        //            questions: data,
+        //            answers: this.props.answerRepos.getAnswersAsync(uid, sid)
+        //        }
+        //    })
+        //    .then(data => this.mergeQsAndAs(data))
+        //    .then(data => this.setState({ loading: false, qandas: data }))
+        //    .catch(reason => console.log("reason: " + reason));
+        const questionsPromise = this.props.questionRepos.getQuestionsAsync(sid);
+        const answersPromise = this.props.answerRepos.getAnswersAsync(uid, sid);
+        Promise.all([questionsPromise, answersPromise])
+            .then(data => this.mergeQsAndAs(data))
+            .then(data => this.setState({ loading: false, qandas: data }));
+    }
+
+    private mergeQsAndAs(data: [Question[],Answer[]]): QAndA[] {
+        //TODO
+        const questions: Question[] = data[0];
+        const answers: Answer[] = data[1];
+        const qandas: QAndA[] = questions
+            .map(question => {
+                const answer = answers.filter(answer => answer.questionId == question.id)[0];
+                return { question, answer }
+            })
+        return qandas;
     }
 
     public render() {
@@ -55,6 +89,7 @@ export class Answers extends React.Component<AnswersProps, AnswersState> {
                     <th style={{ width: '1%' }}>#</th>
                     <th style={{ width: '20%' }}>Title</th>
                     <th>Choices</th>
+                    <th>Scale</th>
                     <th>Weight</th>
                     <th></th>
                 </tr>
@@ -68,6 +103,7 @@ export class Answers extends React.Component<AnswersProps, AnswersState> {
                             <Link to={`${myUrl}/${qanda.answer.id}/detail`}>{qanda.question.title}</Link>
                         </td>
                         <td>{qanda.question.choices && Object.keys(qanda.question.choices).length}</td>
+                        <td>{qanda.answer.scale}</td>
                         <td>{qanda.answer.weight}</td>
                         <td>
                             <Link to={myUrl + "/" + qanda.answer.id + "/edit"}>Edit</Link>

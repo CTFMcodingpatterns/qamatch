@@ -5,8 +5,8 @@
     <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
     <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
     <IsPackable>false</IsPackable>
-    <AssemblyVersion>1.8.0.2</AssemblyVersion>
-    <FileVersion>1.8.0.2</FileVersion>
+    <AssemblyVersion>1.8.0.3</AssemblyVersion>
+    <FileVersion>1.8.0.3</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -34,6 +34,7 @@
     <None Remove="ClientApp\services\answers\Answer.ts" />
     <None Remove="ClientApp\services\answers\AnswersInMemory.ts" />
     <None Remove="ClientApp\services\answers\IAnswerRepos.ts" />
+    <None Remove="ClientApp\services\answers\MyAnswersInMemory.ts" />
     <None Remove="ClientApp\services\questions\Question.ts" />
     <None Remove="ClientApp\services\surveys\ISurveyRepos.ts" />
     <None Remove="ClientApp\services\surveys\Survey.ts" />
@@ -52,6 +53,7 @@
     <TypeScriptCompile Include="ClientApp\services\answers\Answer.ts" />
     <TypeScriptCompile Include="ClientApp\services\answers\AnswersInMemory.ts" />
     <TypeScriptCompile Include="ClientApp\services\answers\IAnswerRepos.ts" />
+    <TypeScriptCompile Include="ClientApp\services\answers\MyAnswersInMemory.ts" />
     <TypeScriptCompile Include="ClientApp\services\questions\Question.ts" />
     <TypeScriptCompile Include="ClientApp\services\surveys\ISurveyRepos.ts" />
     <TypeScriptCompile Include="ClientApp\services\surveys\Survey.ts" />

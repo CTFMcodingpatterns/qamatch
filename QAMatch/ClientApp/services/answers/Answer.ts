@@ -4,5 +4,6 @@
     surveyId: number;
     userId: number;
     choices: {} | null;
+    scale: number | null;
     weight: number | null;
 }

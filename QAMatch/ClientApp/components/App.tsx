@@ -15,7 +15,9 @@ import { QuestionsInMemory } from '../services/questions/QuestionsInMemory';
 import { Question } from '../services/questions/Question';
 //for answers:
 import { Answers } from './answers/Answers';
-import { IAnswerRepos } from 'ClientApp/services/answers/IAnswerRepos';
+import { IAnswerRepos } from '../services/answers/IAnswerRepos';
+import { AnswersInMemory } from '../services/answers/AnswersInMemory';
+import { MyAnswersInMemory } from '../services/answers/MyAnswersInMemory';
 
 interface AppProps {
 }
@@ -23,8 +25,8 @@ interface AppProps {
 interface AppState {
     surveysRepos: ISurveyRepos;
     questionsRepos: IQuestionRepos;
-    answersRepos: IAnswerRepos;
-    //currentQuestions: Question[]; //check: cache of repos
+    otherAnswers: IAnswerRepos;
+    myAnswers: IAnswerRepos; //todo
 }
 
 export class App extends React.Component<AppProps, AppState>  {
@@ -33,7 +35,8 @@ export class App extends React.Component<AppProps, AppState>  {
         this.state = {
             surveysRepos: new SurveysInMemory(),
             questionsRepos: new QuestionsInMemory(),
-            answersRepos: null //todo
+            otherAnswers: new AnswersInMemory(), //todo,
+            myAnswers: new MyAnswersInMemory()
         };
         //TODO
     }
@@ -41,7 +44,8 @@ export class App extends React.Component<AppProps, AppState>  {
     public render() {
         const surveyRepos = this.state.surveysRepos;
         const questionRepos = this.state.questionsRepos;
-        const answerRepos = this.state.answersRepos;
+        const otherAnswers = this.state.otherAnswers;
+        const myAnswers = this.state.myAnswers;
 
         return <Layout>
             <Route exact path='/' component={Home} />
@@ -54,7 +58,7 @@ export class App extends React.Component<AppProps, AppState>  {
             <Route path='/surveys/:sid/questions/:qid/edit' render={(routeProps) => <QuestionForm routeProps={routeProps} repos={questionRepos} />} />
 
             <Route exact path='/surveys/:sid/answers' render={(routeProps) =>
-                <Answers routeProps={routeProps} answerRepos={answerRepos} questionRepos={questionRepos} />} />
+                <Answers routeProps={routeProps} answerRepos={myAnswers} questionRepos={questionRepos} />} />
         </Layout>;
     }
 }
