@@ -7,6 +7,7 @@ import { IAnswerRepos } from '../../services/answers/IAnswerRepos';
 import { Question } from '../../services/questions/Question';
 import { IQuestionRepos } from '../../services/questions/IQuestionRepos';
 import { QAndA } from './QAndA';
+import { DOMElement } from 'react';
 
 interface AnswersProps {
     routeProps: RouteComponentProps<{}>;
@@ -49,7 +50,7 @@ export class Answers extends React.Component<AnswersProps, AnswersState> {
         const qandas: QAndA[] = questions
             .map(question => {
                 const answer = answers.filter(answer => answer.questionId == question.id)[0] || null;
-                const qanda: QAndA = question && answer && { question, answer };
+                const qanda: QAndA = question && { question, answer };
                 return qanda;
             })
             .filter(qanda => qanda != null);
@@ -71,8 +72,15 @@ export class Answers extends React.Component<AnswersProps, AnswersState> {
         return <p><em>Loading Answers...</em></p >;
     }
 
+    private linkIfAnswer(answer: Answer, baseUrl: string, subUrl: string, name: string): any {
+        return (answer)
+            ? <Link to={baseUrl + "/" + answer.id + "/" + subUrl}>{name}</Link>
+            : <Link to="">Empty</Link>;
+    }
+
     private renderTable(qandas: QAndA[]) {
         const myUrl = this.props.routeProps.match.url;
+        const questionsUrl = myUrl.replace("answers", "questions"); //check
         const sortedQandas = qandas
             .slice()
             .sort((qa1, qa2) => qa1.question.order - qa2.question.order);
@@ -90,17 +98,19 @@ export class Answers extends React.Component<AnswersProps, AnswersState> {
             </thead>
             <tbody>
                 {sortedQandas.map(qanda =>
-                    <tr key={qanda.answer.id}>
-                        <td>{qanda.answer.id}</td>
+                    <tr key={qanda.question.id}>
+                        <td>{qanda.question.id}</td>
                         <td>{qanda.question.order}</td>
                         <td>
-                            <Link to={`${myUrl}/${qanda.answer.id}/detail`}>{qanda.question.title}</Link>
+                            <Link to={`${questionsUrl}/${qanda.question && qanda.question.id}/detail`}>{qanda.question.title}</Link>
                         </td>
                         <td>{qanda.question.choices && Object.keys(qanda.question.choices).length}</td>
-                        <td>{qanda.answer.scale}</td>
-                        <td>{qanda.answer.weight}</td>
-                        <td>
-                            <Link to={myUrl + "/" + qanda.answer.id + "/edit"}>Edit</Link>
+                        <td>{qanda.answer && qanda.answer.scale}</td>
+                        <td>{qanda.answer && qanda.answer.weight}</td>
+                        <td>{(qanda.answer)
+                            ? <Link to={myUrl + "/" + qanda.answer.id + "/edit"}>Edit</Link>
+                            : <Link to={myUrl}>Empty</Link>
+                        }
                         </td>
                     </tr>
                 )}
