@@ -1,0 +1,31 @@
+image: microsoft/aspnetcore-build
+
+variables:
+    PROJECT_DIR: "QAMatch"
+
+build:
+    stage: build
+    script:
+        - cd $PROJECT_DIR
+        #- npm install
+        - dotnet restore
+        - dotnet build
+        - dotnet publish
+    artifacts:
+        paths:
+            - $PROJECT_DIR/bin/debug/netcoreapp2.0/publish
+
+test:
+    stage: test
+    script:
+        - cd $PROJECT_DIR
+        - dotnet test
+
+deploy:
+    stage: deploy
+    image: docker:lastest
+    script:
+        - cd $PROJECT_DIR
+        - echo "TODO"
+
+
