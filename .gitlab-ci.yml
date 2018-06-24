@@ -23,9 +23,12 @@ test:
 
 deploy:
     stage: deploy
-    image: docker:lastest
+    image: docker:latest
     script:
         - cd $PROJECT_DIR
+        - docker login registry.gitlab.com
+        - docker build -t registry.gitlab.com/ctfm/qamatch .
+        - docker push registry.gitlab.com/ctfm/qamatch
         - echo "TODO"
 
 
