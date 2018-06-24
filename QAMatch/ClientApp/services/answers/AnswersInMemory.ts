@@ -12,7 +12,10 @@ export class AnswersInMemory implements IAnswerRepos {
     }
 
     public getAnswerById(id: number): Promise<Answer> {
-        throw new Error("Method not implemented.");
+        const answer: Answer = this.AnswerList
+            .filter(answer => answer.id == id)[0];
+        const promise = new Promise<Answer>((res, rej) => res(answer));
+        return promise;
     }
 
     public getAnswerByUSQIdAsync(uid: number, sid: number, qid: number): Promise<Answer> {

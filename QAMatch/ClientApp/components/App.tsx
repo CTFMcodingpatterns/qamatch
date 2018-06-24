@@ -59,10 +59,10 @@ export class App extends React.Component<AppProps, AppState>  {
             <Route path='/surveys/:sid/questions/:qid/edit' render={(routeProps) => <QuestionForm routeProps={routeProps} repos={questionRepos} />} />
 
             <Route exact path='/surveys/:sid/answers' render={(routeProps) => <Answers routeProps={routeProps} answerRepos={myAnswers} questionRepos={questionRepos} />} />
-            //TODO: use AnswerDetail
+            {/*TODO: use AnswerDetail*/}
             <Route exact path='/surveys/:sid/answers/:qid/detail' render={(routeProps) => <QuestionDetail routeProps={routeProps} repos={questionRepos} />} />
-            <Route exact path='/surveys/:sid/answers/create' render={(routeProps) => <AnswerForm routeProps={routeProps} repos={myAnswers} />} />
-            <Route exact path='/surveys/:sid/answers/:aid/edit' render={(routeProps) => <AnswerForm routeProps={routeProps} repos={myAnswers} />} />
+            <Route exact path='/surveys/:sid/answers/create' render={(routeProps) => <AnswerForm routeProps={routeProps} answerRepos={myAnswers} questionRepos={questionRepos} />} />
+            <Route exact path='/surveys/:sid/answers/:aid/edit' render={(routeProps) => <AnswerForm routeProps={routeProps} answerRepos={myAnswers} questionRepos={questionRepos} />} />
         </Layout>;
     }
 }
