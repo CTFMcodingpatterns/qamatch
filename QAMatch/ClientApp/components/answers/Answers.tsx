@@ -80,7 +80,6 @@ export class Answers extends React.Component<AnswersProps, AnswersState> {
 
     private renderTable(qandas: QAndA[]) {
         const myUrl = this.props.routeProps.match.url;
-        const questionsUrl = myUrl.replace("answers", "questions"); //check
         const sortedQandas = qandas
             .slice()
             .sort((qa1, qa2) => qa1.question.order - qa2.question.order);
@@ -102,14 +101,14 @@ export class Answers extends React.Component<AnswersProps, AnswersState> {
                         <td>{qanda.question.id}</td>
                         <td>{qanda.question.order}</td>
                         <td>
-                            <Link to={`${questionsUrl}/${qanda.question && qanda.question.id}/detail`}>{qanda.question.title}</Link>
+                            <Link to={`${myUrl}/${qanda.question && qanda.question.id}/detail`}>{qanda.question.title}</Link>
                         </td>
                         <td>{qanda.question.choices && Object.keys(qanda.question.choices).length}</td>
                         <td>{qanda.answer && qanda.answer.scale}</td>
                         <td>{qanda.answer && qanda.answer.weight}</td>
                         <td>{(qanda.answer)
                             ? <Link to={myUrl + "/" + qanda.answer.id + "/edit"}>Edit</Link>
-                            : <Link to={myUrl}>Empty</Link>
+                            : <Link to={myUrl + "/create"}>Create</Link>
                         }
                         </td>
                     </tr>

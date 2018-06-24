@@ -18,6 +18,7 @@ import { Answers } from './answers/Answers';
 import { IAnswerRepos } from '../services/answers/IAnswerRepos';
 import { AnswersInMemory } from '../services/answers/AnswersInMemory';
 import { MyAnswersInMemory } from '../services/answers/MyAnswersInMemory';
+import { AnswerForm } from '../components/answers/AnswerForm';
 
 interface AppProps {
 }
@@ -53,12 +54,15 @@ export class App extends React.Component<AppProps, AppState>  {
             <Route exact path='/surveys' render={(routeProps) => <Surveys routeProps={routeProps} repos={surveyRepos} />} />
 
             <Route exact path='/surveys/:sid/questions' render={(routeProps) => <Questions routeProps={routeProps} repos={questionRepos} />} />
-            <Route exact path='/surveys/:sid/questions/create' render={(routeProps) => <QuestionForm routeProps={routeProps} repos={questionRepos} />} />
             <Route exact path='/surveys/:sid/questions/:qid/detail' render={(routeProps) => <QuestionDetail routeProps={routeProps} repos={questionRepos} />} />
+            <Route exact path='/surveys/:sid/questions/create' render={(routeProps) => <QuestionForm routeProps={routeProps} repos={questionRepos} />} />
             <Route path='/surveys/:sid/questions/:qid/edit' render={(routeProps) => <QuestionForm routeProps={routeProps} repos={questionRepos} />} />
 
-            <Route exact path='/surveys/:sid/answers' render={(routeProps) =>
-                <Answers routeProps={routeProps} answerRepos={myAnswers} questionRepos={questionRepos} />} />
+            <Route exact path='/surveys/:sid/answers' render={(routeProps) => <Answers routeProps={routeProps} answerRepos={myAnswers} questionRepos={questionRepos} />} />
+            //TODO: use AnswerDetail
+            <Route exact path='/surveys/:sid/answers/:qid/detail' render={(routeProps) => <QuestionDetail routeProps={routeProps} repos={questionRepos} />} />
+            <Route exact path='/surveys/:sid/answers/create' render={(routeProps) => <AnswerForm routeProps={routeProps} repos={myAnswers} />} />
+            <Route exact path='/surveys/:sid/answers/:aid/edit' render={(routeProps) => <AnswerForm routeProps={routeProps} repos={myAnswers} />} />
         </Layout>;
     }
 }

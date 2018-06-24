@@ -107,7 +107,7 @@ export class QuestionForm extends React.Component<FormProps, FormState> {
         return <div>
             <p><em>Loading Question Form ...</em></p>
             <p>route path: {this.props.routeProps.match.path}</p>
-            <p>route params.id: {this.props.routeProps.match.params["id"]}</p>
+            <p>route params.qid: {this.props.routeProps.match.params["qid"]}</p>
         </div>;
     }
 
